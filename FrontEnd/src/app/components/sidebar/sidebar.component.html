@@ -1,0 +1,22 @@
+<mat-toolbar>
+    <button mat-icon-button aria-label="Menu icon" (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+    </button>
+    <h1>FactCheck</h1>
+</mat-toolbar>
+
+<mat-sidenav-container autosize>
+    <mat-sidenav #sidenav mode="side">
+        <mat-nav-list>
+            <a mat-list-item routerLink="">
+                <div class="dashboard-component">
+                    <mat-icon>house</mat-icon>
+                    <span class="dashboard-item">Home</span>
+                </div>
+            </a>
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>
