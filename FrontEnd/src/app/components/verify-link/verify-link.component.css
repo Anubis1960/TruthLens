@@ -1,5 +1,220 @@
-.container{
+/* ============================= */
+/* General Container Styling */
+/* ============================= */
+.container {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    height: 100vh;
+    background-color: #1E201E;
+    padding: 20px;
+}
+
+/* ============================= */
+/* Title & Subtitle Styling */
+/* ============================= */
+.form-title {
+    color: #ECDFCC;
+    font-size: 70px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-subtitle {
+    color: #ECDFCC;
+    font-size: 24px;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 20px;
+    font-family: 'Arial', sans-serif;
+    line-height: 1.5;
+    position: relative;
+}
+
+/* Add quotes around the subtitle */
+.form-subtitle::before, .form-subtitle::after {
+    content: '"';
+    font-size: 35px;
+    position: absolute;
+    top: -5px;
+}
+
+.form-subtitle::before {
+    left: -35px;
+}
+
+.form-subtitle::after {
+    right: -35px;
+}
+
+/* ============================= */
+/* Form Container Styling */
+/* ============================= */
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #697565;
+    border-radius: 8px;
+    padding: 20px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* ============================= */
+/* Input & Form Fields */
+/* ============================= */
+mat-form-field.form-field {
+    width: 100%;
+}
+
+mat-form-field .mat-mdc-text-field-wrapper {
+    background-color: #ECDFCC !important;
+    color: #1E201E !important;
+    border-radius: 4px;
+}
+
+/* Mat label styling */
+mat-label {
+    color: #000 !important;
+}
+
+/* Button inside the input field (clear button) */
+button[mat-icon-button] {
+    background-color: transparent !important;
+    border: none;
+}
+
+/* Close icon inside the button */
+mat-icon {
+    color: #1E201E;
+}
+
+/* Hover effect for the clear button */
+button[mat-icon-button]:hover {
+    background-color: #565c54;
+    border-radius: 50%;
+}
+
+/* Focus effect on input fields */
+mat-form-field.mat-focused .mat-mdc-text-field-wrapper {
+    outline: 2px solid #ECDFCC;
+}
+
+/* ============================= */
+/* Confirm Button Styling */
+/* ============================= */
+.confirm-button {
+    background-color: #ECDFCC;
+    color: #1E201E;
+    font-size: 16px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+/* Hover effect */
+.confirm-button:hover {
+    background-color: #D1C6A1;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Focus effect */
+.confirm-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(26, 30, 26, 0.5);
+}
+
+/* Active state */
+.confirm-button:active {
+    transform: scale(0.98);
+    background-color: #C0B08A;
+}
+
+/* Disabled button */
+.confirm-button:disabled {
+    background-color: #D1C6A1;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* ============================= */
+/* Angular Material Tabs Styling */
+/* ============================= */
+mat-tab-group {
+    width: 100%;
+    max-width: 540px;
+    background-color: #3C3D37;
+    border: none;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+    margin-top: 20px;
+    
+}
+
+/* Tab Header */
+::ng-deep .mat-mdc-tab-header {
+    background-color: #3C3D37;
+    border: none;
+}
+
+/* Tab Labels */
+::ng-deep .mdc-tab__text-label {
+    color: #D1C6A1 !important;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 10px 16px;
+    transition: all 0.3s ease;
+}
+
+/* Active Tab */
+::ng-deep .mat-mdc-tab.mdc-tab--active .mdc-tab__text-label {
+    color: #ECDFCC !important;
+    font-weight: bold;
+    border-bottom: 3px solid #ECDFCC;
+}
+
+/* Hover Effect */
+::ng-deep .mat-mdc-tab:hover .mdc-tab__text-label {
+    color: #ECDFCC !important;
+}
+
+/* Mat Ink Bar (Active Tab Underline) */
+::ng-deep .mat-mdc-tab .mat-mdc-tab-indicator {
+    background-color: #ECDFCC !important;
+}
+
+/* Tab Content */
+::ng-deep .mat-mdc-tab-body {
+    background-color: #697565;
+    padding: 20px;
+}
+
+/* Adjust content inside tabs */
+::ng-deep .mat-mdc-tab-body-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 150px;
+    
+}
+
+/* ============================= */
+/* Responsive Adjustments */
+/* ============================= */
+@media (max-width: 600px) {
+    mat-tab-group {
+        max-width: 100%;
+    }
+    .mdc-tab__text-label {
+        font-size: 14px;
+        padding: 8px;
+    }
 }

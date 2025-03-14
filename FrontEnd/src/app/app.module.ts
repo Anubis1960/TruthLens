@@ -16,6 +16,9 @@ import { SearchComponent } from './components/search/search.component';
 import { VerifyLinkComponent } from './components/verify-link/verify-link.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from "@angular/material/form-field";
+import {MatSelectModule} from '@angular/material/select';
+import { MatTab, MatTabGroup} from '@angular/material/tabs'
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,7 +39,10 @@ import { MatFormFieldModule } from "@angular/material/form-field";
     MatListModule,
     MatIconModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatSelectModule,
+    MatTab,
+    MatTabGroup
   ],
   providers: [
     provideHttpClient(withFetch()),
