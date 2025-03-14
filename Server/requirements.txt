@@ -1,6 +1,5 @@
-pip install python-dotenv
-pip install flask
-pip install flask_admin
+flask
+flask_admin
 bs4
 requests
 pandas
@@ -11,3 +10,5 @@ opencv-python
 seaborn
 matplotlib
 dotenv
+nltk
+keras
