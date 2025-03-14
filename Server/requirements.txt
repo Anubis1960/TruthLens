@@ -12,3 +12,4 @@ matplotlib
 dotenv
 nltk
 keras
+firebase-admin

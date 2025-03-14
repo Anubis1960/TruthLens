@@ -33,9 +33,8 @@ def fetch_image(url: str) -> bytes:
     response = requests.get(url)
     return response.content
 
-
 def main():
-    url = 'https://www.youtube.com/shorts/wfcxBBK3sOc'
+    url = "https://www.youtube.com/shorts/wfcxBBK3sOc"
     soup = get_soup(url)
     if soup is None:
         print(f"Failed to fetch {url}")
