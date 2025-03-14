@@ -1,0 +1,93 @@
+h1 {
+    padding: 0 1rem;
+    color: #ECDFCC;
+}
+
+mat-toolbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+    background-color: #3C3D37;
+}
+mat-toolbar mat-icon{
+    color: #ECDFCC;
+}
+mat-sidenav-container {
+    height: 100%;
+    position: relative;
+    background-color: #1E201E;
+}
+button[mat-icon-button] {
+    background-color: transparent !important;
+    border: none;
+}
+mat-sidenav {
+    padding-top: 3.5rem;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 250px; 
+    transition: transform 0.3s ease;
+    transform: translateX(-100%); 
+    background-color: #3C3D37;
+}
+
+mat-sidenav.mat-drawer-opened {
+    transform: translateX(0);
+}
+
+mat-nav-list {
+    background-color: #3C3D37;
+}
+
+.dashboard-component {
+    display: flex;
+    align-items: center; 
+    gap: 10px; 
+    padding: 10px 16px; 
+}
+.dashboard-component mat-icon {
+    font-size: 24px;
+    color: #ECDFCC; 
+}
+
+.dashboard-item {
+    font-size: 17px; 
+    color: #ECDFCC; 
+    font-weight: bold;
+}
+
+
+mat-nav-list a.mat-list-item mat-icon {
+    color: inherit;
+}
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    transition: opacity 0.3s ease;
+    opacity: 0;
+    pointer-events: none; 
+    z-index: 999; 
+}
+
+mat-sidenav.mat-drawer-opened ~ .backdrop {
+    opacity: 1; 
+    pointer-events: all; 
+}
+
+@media screen and (min-width: 600px) {
+    mat-sidenav {
+        padding-top: 4rem;
+    }
+    mat-sidenav-content {
+        padding-top: 4rem;
+    }
+}
