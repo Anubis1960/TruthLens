@@ -14,8 +14,7 @@ REF = db.reference(DB_REF)
 def create_user(data: User) -> dict:
 	try:
 		user_ref = REF.push(data.to_dict())
-		user_dto = UserDTO(user_ref.key, data.email, data.password)
-		return user_dto.to_dict()
+		return UserDTO(user_ref.key, data.email, data.password).to_dict()
 
 	except KeyError as e:
 		return {"error": f"Key missing: {e}"}
