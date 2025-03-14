@@ -14,24 +14,20 @@ site_bp = Blueprint('sites', __name__, url_prefix=SITE_URL)
 #	Routes
 #
 @site_bp.route('', methods=['POST'])
-def verify_site() -> jsonify:
-	site_data = request.get_json()
-	print(site_data)
+def verify_link() -> jsonify:
+	data = request.get_json()
 
-	try:
-		domain = site_data['domain']
-		articles = site_data['articles']
-		stats = site_data['stats']
+	# check data
+	if data is None:
+		return jsonify({'error': 'Bad data.'}), HTTPStatus.BAD_REQUEST
 
-		# response
-		response = create_site(domain, articles, stats)
-		print(f'Response: {response}')
+	# retrieve link from json
+	url = data['link']
 
-		if 'error' in response:
-			return jsonify(response), HTTPStatus.BAD_REQUEST
+	if url is None:
+		return jsonify({'error': 'No url'}), HTTPStatus.BAD_REQUEST
 
-		return jsonify(response), HTTPStatus.CREATED
+	# response
+	response = validate_link(url)
 
-	except Exception as e:
-		return jsonify({'error': str(e)}), HTTPStatus.BAD_REQUEST
 
