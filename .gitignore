@@ -174,3 +174,4 @@ cython_debug/
 .idea
 node_modules
 .editorconfig
+__init__.py
