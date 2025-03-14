@@ -8,3 +8,5 @@ opencv-python
 seaborn
 matplotlib
 dotenv
+nltk
+keras
