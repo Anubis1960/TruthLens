@@ -16,7 +16,7 @@ mat-toolbar mat-icon{
 }
 mat-sidenav-container {
     height: 100%;
-    position: relative;
+    position: fixed;
     background-color: #1E201E;
 }
 button[mat-icon-button] {
