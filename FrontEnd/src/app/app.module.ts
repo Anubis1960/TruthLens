@@ -16,6 +16,9 @@ import { SearchComponent } from './components/search/search.component';
 import { VerifyLinkComponent } from './components/verify-link/verify-link.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from "@angular/material/form-field";
+import { DomainTableComponent } from './components/domain-table/domain-table.component';
+import { MatTableModule} from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,6 +27,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
     SidebarComponent,
     SearchComponent,
     VerifyLinkComponent,
+    DomainTableComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,7 +40,9 @@ import { MatFormFieldModule } from "@angular/material/form-field";
     MatListModule,
     MatIconModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatTableModule,
+    MatSortModule,
   ],
   providers: [
     provideHttpClient(withFetch()),

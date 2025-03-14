@@ -1,0 +1,16 @@
+.center-table-container {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+.search-box {
+    width: 50%;
+    padding: 10px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    text-align: center;
+}
