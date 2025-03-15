@@ -30,3 +30,4 @@ def login() -> jsonify:
             }), HTTPStatus.OK
         else:
             return jsonify({'message': 'Invalid credentials'}), HTTPStatus.BAD_REQUEST
+
