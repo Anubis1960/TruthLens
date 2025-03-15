@@ -24,3 +24,6 @@ langchain_huggingface
 langchain_community
 PyPDF2
 deep_translator
+yt-dlp
+assemblyai
+
