@@ -1,0 +1,32 @@
+.user-input-container {
+  width: 100%;
+  background-color: #ffffff;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid #ccc; /* Optional, adds a line between the message panel and input */
+}
+
+.input-textfield {
+  width: 70%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.button {
+  width: 20%;
+  background-color: #697565;
+  color: white;
+  font-size: 14px;
+  padding: 5px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #3C3D37;
+}
+

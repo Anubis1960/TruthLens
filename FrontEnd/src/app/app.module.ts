@@ -21,6 +21,10 @@ import { MatTab, MatTabGroup} from '@angular/material/tabs'
 import { DomainTableComponent } from './components/domain-table/domain-table.component';
 import { MatTableModule} from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
+import { UserInputComponent } from './components/user-input/user-input.component';
+import { MessagePanelComponent } from './components/message-panel/message-panel.component';
+import { HeaderComponent } from './components/header/header.component';
+import { ChatbotComponent } from './components/chatbot/chatbot.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +35,10 @@ import { MatSortModule } from '@angular/material/sort';
     SearchComponent,
     VerifyLinkComponent,
     DomainTableComponent,
+    UserInputComponent,
+    MessagePanelComponent,
+    HeaderComponent,
+    ChatbotComponent,
   ],
   imports: [
     BrowserModule,

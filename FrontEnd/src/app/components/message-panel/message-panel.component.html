@@ -1,0 +1,10 @@
+<section class="message-panel-container">
+    <div *ngFor="let message of messages; trackBy: trackById" [ngClass]="message.sender === 'user' ? 'user-message' : 'bot-message'">
+      {{ message.content }}
+      <div class="message-date">{{ formatDate(message.dateTime) }}</div>
+    </div>
+    <div *ngIf="messages.length === 0">
+      No messages
+    </div>
+  </section>
+  
