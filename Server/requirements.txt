@@ -12,3 +12,5 @@ matplotlib
 dotenv
 nltk
 keras
+pytubefix
+deep_translator

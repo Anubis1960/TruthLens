@@ -1,10 +1,10 @@
 import os
+import yt_dlp
 from pytubefix import YouTube
-from moviepy.editor import VideoFileClip, AudioFileClip
 
 SAVE_PATH=r"../temp"
 
-def download_audio(url: str):
+def download_yt_audio(url: str):
 	try:
 		# object creation using YouTube
 		yt = YouTube(url)
@@ -18,17 +18,14 @@ def download_audio(url: str):
 
 	try:
 		# downloading the video (without audio)
-		audio_stream.download(output_path=SAVE_PATH, filename=f'{os.urandom(8).hex}.mp4')
+		audio_stream.download(output_path=SAVE_PATH, filename=f'{os.urandom(8).hex()}.mp4')
 		print('Video downloaded successfully!')
 
 	except Exception as e:
 		print(f"Some Error: {e}")
 
 
-	except Exception as e:
-		print(f"Some Error: {e}")
-
-def download_video(url: str):
+def download_yt_video(url: str):
 	try:
 		# object creation using YouTube
 		yt = YouTube(url)
@@ -48,4 +45,12 @@ def download_video(url: str):
 	except Exception as e:
 		print(f"Some Error: {e}")
 
-download_video("https://www.youtube.com/shorts/7WM-auFKhzM")
+
+def download_tiktok_audio(url: str):
+	# tiktok audio download
+	ydl_opts = {
+		'outtmpl': f'{os.urandom(8).hex()}.mp4',
+	}
+
+	with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+		ydl.download([url])
