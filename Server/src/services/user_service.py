@@ -1,20 +1,21 @@
 from ..model.user import User
 from ..dto.user_dto import UserDTO
-from firebase_admin import db
+from ..util.database import db
+from ..util.encrypt import encrypt
 
 #
 #	Path for users
 #
-DB_REF = 'fake-news/user'
-REF = db.reference(DB_REF)
+USERS_COLLECTION = "users"
 
 #
 #	CRUD operations
 #
 def create_user(data: User) -> dict:
 	try:
-		user_ref = REF.push(data.to_dict())
-		return UserDTO(user_ref.key, data.email, data.password).to_dict()
+		data.password = encrypt(data.password)
+		_,user_ref = db.collection(USERS_COLLECTION).add(data.to_dict())
+		return UserDTO(user_ref.id, data.email, data.password).to_dict()
 
-	except KeyError as e:
-		return {"error": f"Key missing: {e}"}
+	except Exception as e:
+		return {"error": str(e)}
