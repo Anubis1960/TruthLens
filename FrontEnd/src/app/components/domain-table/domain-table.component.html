@@ -1,6 +1,8 @@
 <app-sidebar></app-sidebar>
+ 
+<body>
 <div class="center-table-container">
-    <input matInput (keyup)="applyFilter($event)" class="search-box">
+    <input matInput (keyup)="applyFilter($event)" class="search-box" placeholder="Search in table...">
     <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)" class="mat-elevation-z8">
       <!-- Domain Name Column -->
       <ng-container matColumnDef="domain">
@@ -18,4 +20,5 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>
+</body>
   
