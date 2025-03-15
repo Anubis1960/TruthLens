@@ -61,14 +61,14 @@ def predict(title: str, text: str) -> str:
     print("asd")
     title = preprocess_text(title)
     text = preprocess_text(text)
-    with open ('tokenizer.pickle', 'rb') as handle:
-        tokenizer = pickle.load(handle)
+    tokenizer = pickle.load( open( "src/util/news/tokenizer.pickle", "rb" ) )
 
     # Combine title and text
     content = "<title>" + title + "</title> <content>" + text + "</content>"
+    print(content[0])
     seq = tokenizer.texts_to_sequences([content])
+    print(seq)
     pad = pad_sequences(seq, maxlen=MAXLEN, padding='post')
-
     print(pad)
     pred = rf.predict(pad)
     print(pred)

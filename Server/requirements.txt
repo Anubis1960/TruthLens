@@ -1,5 +1,6 @@
 flask
 flask_admin
+flask-cors
 bs4
 requests
 pandas
@@ -12,3 +13,5 @@ matplotlib
 dotenv
 nltk
 keras
+firebase-admin
+flask_socketio

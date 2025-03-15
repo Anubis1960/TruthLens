@@ -30,4 +30,6 @@ def verify_link() -> jsonify:
 	# response
 	response = validate_link(url)
 
+	return jsonify(response), HTTPStatus.OK
+
 
