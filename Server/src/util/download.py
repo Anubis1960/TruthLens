@@ -25,7 +25,13 @@ def fetch_video_from_streaming_service(url: str, output_path: str):
     except Exception as e:
         print(f"Error downloading video: {e}")
 
-# download youtube video
-fetch_video_from_streaming_service("https://www.youtube.com/shorts/3fQ3nAjT4e8", "video.mp4")
-# download tiktok video
-fetch_video_from_streaming_service("https://www.tiktok.com/@space.5j2/video/7306554369460243755?q=black%20hole&t=1742051916098", "video_tiktok.mp4")
+def main():
+    # download youtube video
+    fetch_video_from_streaming_service("https://www.youtube.com/shorts/3fQ3nAjT4e8", "video.mp4")
+    # download tiktok video
+    fetch_video_from_streaming_service(
+        "https://www.tiktok.com/@space.5j2/video/7306554369460243755?q=black%20hole&t=1742051916098",
+        "video_tiktok.mp4")
+
+if __name__ == '__main__':
+    main()
