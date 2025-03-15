@@ -13,7 +13,7 @@ user_bp = Blueprint('users', __name__, url_prefix=USER_URL)
 #
 #	Routes
 #
-@user_bp.route('', methods=['POST'])
+@user_bp.route('/register', methods=['POST'])
 def add_user() -> jsonify:
 	user_data = request.get_json()
 	print(user_data)

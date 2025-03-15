@@ -25,6 +25,8 @@ import { UserInputComponent } from './components/user-input/user-input.component
 import { MessagePanelComponent } from './components/message-panel/message-panel.component';
 import { HeaderComponent } from './components/header/header.component';
 import { ChatbotComponent } from './components/chatbot/chatbot.component';
+import { RegisterComponent } from './components/register/register.component';
+
 
 @NgModule({
   declarations: [
@@ -39,6 +41,7 @@ import { ChatbotComponent } from './components/chatbot/chatbot.component';
     MessagePanelComponent,
     HeaderComponent,
     ChatbotComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
