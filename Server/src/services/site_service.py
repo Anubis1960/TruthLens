@@ -1,4 +1,8 @@
 import json
+import os
+
+import numpy as np
+
 from ..model.site import Site
 from ..dto.site_dto import SiteDTO
 from ..util.scrape import *
@@ -25,7 +29,7 @@ def validate_link(url: str) -> dict:
 		title = extract_title(soup)
 
 		# Predict category
-		predicted_text = predict(title, text)
+		predicted_text = predict_text(title, text)
 
 		# Search domain in db
 		domain_ref = db.collection(SITES_COLLECTION).document(domain).get()
@@ -67,3 +71,48 @@ def validate_link(url: str) -> dict:
 		# Log the error and return an error message
 		print(f"Error validating link: {e}")
 		return {"error": f"Failed to validate link: {str(e)}"}
+
+def validate_video_link(link: str) -> dict:
+	try:
+
+		file_name = os.urandom(8).hex()
+
+		out_path = f"temp/{file_name}"
+		title = fetch_video_from_streaming_service(link, out_path)
+
+		total_frames = get_total_frames(out_path)
+
+		frames = np.random.randint(0, total_frames, 5)
+
+		prediction = analyze_frames(f"{out_path}.mp4", frames)
+
+		print(prediction)
+
+		text = transcript(link)
+
+		verdict = predict_text(title, text)
+
+		print(verdict)
+
+		return {"audio": verdict, "video": prediction}
+
+	except Exception as e:
+		# Log the error and return an error message
+		print(f"Error validating video link: {e}")
+		return {"error": f"Failed to validate video link: {str(e)}"}
+
+def validate_image_link(link: str) -> dict:
+	try:
+		img = fetch_image(link)
+
+		if img is None:
+			return {"error": "Failed to fetch image."}
+
+		prediction = predict_image(img)
+
+		return {"prediction": prediction}
+
+	except Exception as e:
+		# Log the error and return an error message
+		print(f"Error validating image link: {e}")
+		return {"error": f"Failed to validate image link: {str(e)}"}
