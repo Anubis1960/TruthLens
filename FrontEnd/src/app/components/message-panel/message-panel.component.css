@@ -1,0 +1,35 @@
+.message-panel-container {
+    flex-grow: 1;
+    width: 100%;
+    max-height: 180px;
+    background-color: #ffffff;
+    padding: 15px;
+    overflow-y: scroll; 
+    display: flex;
+    flex-direction: column; 
+  }
+  
+  .message-panel-container .message {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 4px;
+    background-color: #f1f1f1;
+  }
+  
+  .message-panel-container .user-message {
+    background-color: #e7f9e7; 
+    align-self: flex-end;
+  }
+  
+  .message-panel-container .bot-message {
+    background-color: #f1f1f1; 
+    align-self: flex-start;
+  }
+  
+  .message-date {
+    font-size: 15px;
+    color: #aaa;
+    text-align: right;
+    margin-top: 5px;
+  }
+  

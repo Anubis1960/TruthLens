@@ -1,0 +1,26 @@
+.chatbot-card {
+  width: 300px;
+  max-height: 400px;
+  position: fixed;
+  bottom: 20px;
+  right: 130px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+}
+/* Button to open the chatbot */
+button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 10;
+  background-color: #697565;
+  color: white;
+  border-radius: 50%;
+  padding: 12px;
+}
+
+button:hover {
+  background-color: #3C3D37;
+}
