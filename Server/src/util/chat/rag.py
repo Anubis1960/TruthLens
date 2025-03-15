@@ -57,16 +57,16 @@ def rag_with_reasoner(user_query: str) -> str:
 
     # Create prompt with context
     prompt = f"""Based on the following context, answer the user's question concisely and specifically.
-    If there isn't sufficient information, suggest a better query for RAG.
-    Context:
-    {context}
-
-    Metadata:
-    Retrieved from {len(docs)} documents.
-
-    Question: {user_query}
-
-    Answer:"""
+        If there isn't sufficient information, suggest a better query for RAG.
+        Context:
+        {context}
+    
+        Metadata:
+        Retrieved from {len(docs)} documents.
+    
+        Question: {user_query}
+    
+        Answer:"""
 
     # Get response from reasoning model
     response = reasoner.run(prompt, reset=False)
