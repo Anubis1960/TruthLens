@@ -17,4 +17,9 @@ pytubefix
 deep_translator
 firebase-admin
 flask_socketio
-
+torch
+smolagents
+langchain
+langchain_huggingface
+langchain_community
+PyPDF2
