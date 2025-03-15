@@ -4,53 +4,28 @@ from pytubefix import YouTube
 
 SAVE_PATH=r"../temp"
 
-def download_yt_audio(url: str):
-	try:
-		# object creation using YouTube
-		yt = YouTube(url)
+def fetch_video_from_streaming_service(url: str, output_path: str):
+    """
+    Downloads a video from a streaming service using yt-dlp.
 
-	except:
-		# to handle exception
-		print("Connection Error")
-
-	# Get all streams for audio without video (only audio)
-	audio_stream = yt.streams.filter(file_extension='mp4', progressive=False, only_audio=True).first()
-
-	try:
-		# downloading the video (without audio)
-		audio_stream.download(output_path=SAVE_PATH, filename=f'{os.urandom(8).hex()}.mp4')
-		print('Video downloaded successfully!')
-
-	except Exception as e:
-		print(f"Some Error: {e}")
+    :param url: The URL of the video on the streaming platform.
+    :param output_path: The local file path where the video will be saved.
+    """
 
 
-def download_yt_video(url: str):
-	try:
-		# object creation using YouTube
-		yt = YouTube(url)
+    ydl_opts = {
+        'outtmpl': output_path,  # Output file path
+        'format': 'best',  # Choose the best quality format
+    }
 
-	except:
-		# to handle exception
-		print("Connection Error")
+    try:
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            ydl.download([url])
+        print(f"Video successfully saved to {output_path}")
+    except Exception as e:
+        print(f"Error downloading video: {e}")
 
-	# Get all streams for video without audio (only video)
-	video_stream = yt.streams.filter(file_extension='mp4', progressive=False, only_video=True).first()
-
-	try:
-		# downloading the video (without audio)
-		video_stream.download(output_path=SAVE_PATH, filename=f"{os.urandom(8).hex()}.mp4")
-		print('Video downloaded successfully!')
-
-	except Exception as e:
-		print(f"Some Error: {e}")
-
-
-def download_tiktok_audio(url: str):
-	# tiktok audio download
-	ydl_opts = {
-		'outtmpl': f'{os.urandom(8).hex()}.mp4',
-	}
-
-	with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-		ydl.download([url])
+# download youtube video
+fetch_video_from_streaming_service("https://www.youtube.com/shorts/3fQ3nAjT4e8", "video.mp4")
+# download tiktok video
+fetch_video_from_streaming_service("https://www.tiktok.com/@space.5j2/video/7306554369460243755?q=black%20hole&t=1742051916098", "video_tiktok.mp4")
