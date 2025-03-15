@@ -9,7 +9,6 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain.vectorstores import FAISS
 from dotenv import load_dotenv
-import PyPDF2
 import os
 import shutil
 
