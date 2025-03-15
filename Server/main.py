@@ -4,9 +4,6 @@ from flask_cors import CORS
 
 from dotenv import load_dotenv
 
-from src.util.database import db
-
-
 from src.util.extensions import socketio
 from src.routes.user_routes import *
 from src.routes.site_routes import *
@@ -31,7 +28,7 @@ socketio.init_app(app)
 #	Blueprints
 #
 app.register_blueprint(user_bp)
-# app.register_blueprint(site_bp)
+app.register_blueprint(site_bp)
 
 if __name__ == '__main__':
 	socketio.run(app, host='0.0.0.0', port=5000, use_reloader=False, debug=True, allow_unsafe_werkzeug=True)
