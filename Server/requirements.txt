@@ -1,5 +1,6 @@
 flask
 flask_admin
+flask-cors
 bs4
 requests
 pandas
@@ -14,3 +15,6 @@ nltk
 keras
 pytubefix
 deep_translator
+firebase-admin
+flask_socketio
+

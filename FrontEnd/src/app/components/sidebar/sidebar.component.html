@@ -8,13 +8,19 @@
 <mat-sidenav-container autosize>
     <mat-sidenav #sidenav mode="side">
         <mat-nav-list>
-            <a mat-list-item routerLink="home">
+            <a mat-list-item routerLink="">
                 <div class="dashboard-component">
                     <mat-icon>house</mat-icon>
                     <span class="dashboard-item">Home</span>
                 </div>
             </a>
-            <a mat-list-item routerLink="">
+            <a mat-list-item routerLink="domain">
+                <div class="dashboard-component">
+                    <mat-icon>logout</mat-icon>
+                    <span class="dashboard-item">Domain</span>
+                </div>
+            </a>
+            <a mat-list-item routerLink="login">
                 <div class="dashboard-component">
                     <mat-icon>logout</mat-icon>
                     <span class="dashboard-item">Log out</span>

@@ -38,7 +38,7 @@ def translate_text(text: str) -> str:
     return GoogleTranslator(source='auto', target='en').translate(text) # free to choose target
 
 def main():
-    url = 'https://www.tiktok.com/foryou?lang=en'
+    url = "https://www.youtube.com/shorts/wfcxBBK3sOc"
     soup = get_soup(url)
     if soup is None:
         print(f"Failed to fetch {url}")
