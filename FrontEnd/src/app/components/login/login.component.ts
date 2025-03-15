@@ -21,6 +21,8 @@ export class LoginComponent {
   }
 
   onLogin():void{
+    console.log(this.email, "email to send")
+    console.log(this.password, "password to send")
     this.authService.login(this.email,this.password).subscribe({
       next: (data: User)=>{
         this.user = data;

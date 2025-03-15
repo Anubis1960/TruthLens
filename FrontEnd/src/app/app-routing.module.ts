@@ -8,8 +8,8 @@ import { canActivate } from './guard/auth.guard';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: '', redirectTo:'/login',pathMatch:'full'}, 
-  { path: 'domain', component: DomainTableComponent, canActivate: [canActivate] },
-  { path: 'home', component: HomeComponent, canActivate: [canActivate] },
+  { path: 'domain', component: DomainTableComponent, /*canActivate: [canActivate] */},
+  { path: 'home', component: HomeComponent, /*canActivate: [canActivate]*/ },
 ];
 
 @NgModule({

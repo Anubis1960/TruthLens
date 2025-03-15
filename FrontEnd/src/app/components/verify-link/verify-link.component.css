@@ -153,16 +153,19 @@ mat-tab-group {
     width: 100%;
     max-width: 540px;
     background-color: #3C3D37;
+    border-radius: 12px; /* Rounded corners added */
     border: none;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
     margin-top: 20px;
-    
+    overflow: hidden; /* Ensures corners stay rounded */
 }
 
 /* Tab Header */
 ::ng-deep .mat-mdc-tab-header {
     background-color: #3C3D37;
-    border: none;
+    border-top-left-radius: 12px; /* Rounds top corners */
+    border-top-right-radius: 12px;
+    overflow: hidden;
 }
 
 /* Tab Labels */
@@ -195,6 +198,9 @@ mat-tab-group {
 ::ng-deep .mat-mdc-tab-body {
     background-color: #697565;
     padding: 20px;
+    border-bottom-left-radius: 12px; /* Rounds bottom corners */
+    border-bottom-right-radius: 12px;
+    overflow: hidden;
 }
 
 /* Adjust content inside tabs */
@@ -203,7 +209,6 @@ mat-tab-group {
     justify-content: center;
     align-items: center;
     min-height: 150px;
-    
 }
 
 /* ============================= */
