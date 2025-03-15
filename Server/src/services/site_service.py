@@ -14,34 +14,27 @@ REF = db.reference(DB_REF)
 #
 #	CRUD operations
 #
-def validate_link(url: str) -> dict[str, str] | None:
-	print(f'Service -> received link:{url}')
+def validate_link(url: str) -> dict[str, str]:
+    print(f'Service -> received link:{url}')
+    try:
+        # Fetch link domain
+        domain = extract_domain(url)
+        print(f'Extracted domain -> {domain}')
 
-	try:
-		# fetch link domain
-		domain = extract_domain(url)
-		print(f'Extracted domain -> {domain}')
+        # Fetch link text and title
+        soup = get_soup(url)
+        text = extract_text(soup)
+        title = extract_title(soup)
+        print(title)
 
-		# fetch link text and title
-		text = extract_text(get_soup(url))
-		title = extract_title(get_soup(url))
-		print(title)
-		predicted_text = predict(title, text)
-		print(f'Predicted text -> {predicted_text}')
+        # Predict category
+        predicted_text = predict(title, text)
+        print(f'Predicted text -> {predicted_text}')
 
-		# fetch db data based on domain
-		fetched_data = REF.order_by_child('domain').equal_to(domain).get()
+        # Return result as a dictionary
+        return {"domain": domain, "title": title, "text": text, "prediction": predicted_text}
 
-		if fetched_data:
-			print('Data exists')
-			# data exists
-			return None
-
-
-		else:
-			print('Data doesn\'t exist')
-			# no data
-			return None
-
-	except Exception as e:
-		return {'error': str(e)}
+    except Exception as e:
+        # Log the error and return an error message
+        print(f"Error validating link: {e}")
+        return {"error": f"Failed to validate link: {str(e)}"}
