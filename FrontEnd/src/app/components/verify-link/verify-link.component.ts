@@ -1,6 +1,7 @@
 import { Component, ElementRef, Input, input, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-
+import { HttpClient} from '@angular/common/http';
+import { VerifyLinkService } from '../../services/verify-link.service';
 @Component({
   selector: 'app-verify-link',
   standalone: false,
@@ -14,13 +15,13 @@ event: any;
 
   value = '';
   selected_type: string = '';
-  @ViewChild('fileUpload')
+@ViewChild('fileUpload')
   fileUpload: ElementRef | undefined;
   inputFileName: string | undefined;
-  @Input()
-  files: File[] = []
+@Input()
+files: File[] = []
 
-  constructor(private sanitizer: DomSanitizer){}
+  constructor(private sanitizer: DomSanitizer, private http: HttpClient, private service: VerifyLinkService){}
 
   onClick(event: Event) {
     if (this.fileUpload)
@@ -31,24 +32,21 @@ event: any;
 
   }
   onFileSelected(event: any) {
-    let files = event.dataTransfer ? event.dataTransfer.files : event.target.files;
-    console.log('event:', event)
-    for (let i = 0; i < files.length; i++) {
-      let file = files[i];
-
-      //if(!this.isFileSelected(file)){
-      if (this.validate(file)) {
-        //      if(this.isImage(file)) {
-        file.objectURL = this.sanitizer.bypassSecurityTrustUrl((window.URL.createObjectURL(files[i])));
-        //      }
-        if (!this.isMultiple()) {
-          this.files = []
-        }
-        this.files.push(files[i]);
-        //  }
-      }
-      //}
+      this.files = event.target.files
+  }
+  onUpload(): void{
+    const fd = new FormData()
+    if (this.files.length === 0) {
+      return
     }
+    for (const file of this.files) {
+      console.log(`Adăugat fișier: ${file.name}`); 
+      fd.append('files', file)
+    }
+    this.service.uploadFile(fd).subscribe((response) => {
+      console.log(response)
+    })
+
   }
 
   removeFile(event:Event, file: any) {
@@ -102,4 +100,5 @@ event: any;
   verify_video_link():void{
     console.log("In verify_video_link function...");
   }
+
 }

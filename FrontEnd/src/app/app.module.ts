@@ -22,7 +22,6 @@ import { DomainTableComponent } from './components/domain-table/domain-table.com
 import { MatTableModule} from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { RegisterComponent } from './components/register/register.component';
-
 @NgModule({
   declarations: [
     AppComponent,
