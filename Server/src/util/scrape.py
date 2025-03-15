@@ -1,5 +1,6 @@
 import bs4
 import requests
+from deep_translator import GoogleTranslator
 
 
 def extract_domain(url: str) -> str:
@@ -34,6 +35,9 @@ def extract_selector(soup: bs4.BeautifulSoup, selector: str) -> list[str]:
 def fetch_image(url: str) -> bytes:
     response = requests.get(url)
     return response.content
+
+def translate_text(text: str) -> str:
+    return GoogleTranslator(source='auto', target='en').translate(text) # free to choose target
 
 def main():
     url = "https://www.tiktok.com/@emyemilia801/video/7453047804722679062?is_from_webapp=1"

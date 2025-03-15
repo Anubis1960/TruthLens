@@ -1,5 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../models/user-model';
@@ -22,9 +21,19 @@ export class LoginComponent {
   }
 
   onLogin():void{
-    // TODO
+    this.authService.login(this.email,this.password).subscribe({
+      next: (data: User)=>{
+        this.user = data;
+        sessionStorage.setItem("user",JSON.stringify(this.user));
+        this.router.navigateByUrl('/home');
+      },
+      error: () => {
+        console.log("Failed to log in.");
+      }
+    })
   }
   loginWithGoogle():void{
-    // TODO
+    console.log("Google Auth selected...");
+    window.location.href = 'http://localhost:5000/login';
   }
 }
