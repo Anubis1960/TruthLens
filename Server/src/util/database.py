@@ -9,10 +9,9 @@ load_dotenv()
 #
 #	Database config
 #
-
 cred = credentials.Certificate(os.getenv('FIREBASE_PATH'))
 
 # init
 firebase_admin.initialize_app(cred)
 
-db = firestore.client();
+db = firestore.client()
