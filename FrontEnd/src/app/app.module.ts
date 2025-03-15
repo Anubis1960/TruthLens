@@ -21,6 +21,7 @@ import { MatTab, MatTabGroup} from '@angular/material/tabs'
 import { DomainTableComponent } from './components/domain-table/domain-table.component';
 import { MatTableModule} from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
+import { RegisterComponent } from './components/register/register.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { MatSortModule } from '@angular/material/sort';
     SearchComponent,
     VerifyLinkComponent,
     DomainTableComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
