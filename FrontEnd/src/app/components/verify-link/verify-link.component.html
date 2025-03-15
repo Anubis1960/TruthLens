@@ -1,12 +1,49 @@
 <div class="container">
-    <div class="form-container">
-      <mat-form-field class="example-form-field">
-        <mat-label>Paste your link here</mat-label>
-        <input matInput type="text" [(ngModel)]="value">
-        <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
-          <mat-icon>close</mat-icon>
-        </button>
-      </mat-form-field>
-    </div>
+  <h1 class="form-title">TruthLens</h1>
+  <h2 class="form-subtitle">Ready to check a link? Drop it down here!</h2>
+  <mat-tab-group class="tab">
+    <mat-tab label="Link">
+      <div class="form-container">
+        <mat-form-field class="form-field">
+          <mat-label>Paste your link here</mat-label>
+          <input matInput type="text" [(ngModel)]="value">
+          <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+        <mat-form-field class="form-field">
+          <mat-label>Type</mat-label>
+          <mat-select [(ngModel)]="selected_type">
+            <mat-option value="one">Site</mat-option>
+            <mat-option value="two">Image</mat-option>
+            <mat-option value="three">Video</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button class="confirm-button" (click)="onConfirm()">Confirm</button>
+      </div>
+    </mat-tab>
+    <mat-tab label="Image">
+      <div class="form-container">
+        <mat-form-field class="form-field">
+          <mat-label>Upload your image</mat-label>
+          <!-- <input #csvInput hidden="true" type="file" onclick="this.value=null" (change)="csvInputChange($event)" accept=".csv"/>
+          <button mat-flat-button color="primary" (click)="csvInput.click()">Choose Spreadsheet File (CSV)</button> -->
+        </mat-form-field>
+        <mat-form-field class="form-field">
+          <mat-label>Type</mat-label>
+          <mat-select [(ngModel)]="selected_type">
+            <mat-option value="one">Site</mat-option>
+            <mat-option value="two">Image</mat-option>
+            <mat-option value="three">Video</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button class="confirm-button" (click)="onConfirm()">Confirm</button>
+      </div>
+    </mat-tab>
+    <mat-tab label="Video"> Content 3 </mat-tab>
+    
+    
+  </mat-tab-group>
+    
   </div>
   

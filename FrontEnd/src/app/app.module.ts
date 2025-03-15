@@ -16,9 +16,12 @@ import { SearchComponent } from './components/search/search.component';
 import { VerifyLinkComponent } from './components/verify-link/verify-link.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from "@angular/material/form-field";
+import {MatSelectModule} from '@angular/material/select';
+import { MatTab, MatTabGroup} from '@angular/material/tabs'
 import { DomainTableComponent } from './components/domain-table/domain-table.component';
 import { MatTableModule} from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,8 +44,12 @@ import { MatSortModule } from '@angular/material/sort';
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
+    MatSelectModule,
+    MatTab,
+    MatTabGroup,
     MatTableModule,
     MatSortModule,
+
   ],
   providers: [
     provideHttpClient(withFetch()),
