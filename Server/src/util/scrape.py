@@ -6,8 +6,10 @@ def extract_domain(url: str) -> str:
     return url.split('/')[2]
 
 def get_soup(url: str) -> bs4.BeautifulSoup | None:
-    response = requests.get(url)
+    headers = {'User-Agent': 'Mozilla/5.0'}
+    response = requests.get(url, headers=headers)
     if response.status_code != 200:
+        print(response.status_code)
         return None
     return bs4.BeautifulSoup(response.text, 'html.parser')
 
@@ -34,7 +36,7 @@ def fetch_image(url: str) -> bytes:
     return response.content
 
 def main():
-    url = "https://www.youtube.com/shorts/wfcxBBK3sOc"
+    url = "https://www.tiktok.com/@emyemilia801/video/7453047804722679062?is_from_webapp=1"
     soup = get_soup(url)
     if soup is None:
         print(f"Failed to fetch {url}")
