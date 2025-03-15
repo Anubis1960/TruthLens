@@ -78,6 +78,10 @@ tool_model = get_model(tool_model_id)
 primary_agent = ToolCallingAgent(tools=[rag_with_reasoner], model=tool_model, add_base_tools=False, max_steps=3)
 
 
+def prompt_response(prompt: str) -> str:
+    return primary_agent.run(prompt)
+
+
 # Example prompt: Compare and contrast the services offered by RankBoost and Omni Marketing
 def main():
     # Start the conversation

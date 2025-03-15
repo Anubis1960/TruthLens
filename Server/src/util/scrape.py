@@ -1,7 +1,8 @@
 import bs4
 import requests
 from deep_translator import GoogleTranslator
-
+from src.util.img import img_detect
+import cv2
 
 def extract_domain(url: str) -> str:
     return url.split('/')[2]
@@ -32,25 +33,24 @@ def extract_title(soup: bs4.BeautifulSoup) -> str:
 def extract_selector(soup: bs4.BeautifulSoup, selector: str) -> list[str]:
     return [element.string for element in soup.select(selector)]
 
-def fetch_image(url: str) -> bytes:
-    response = requests.get(url)
-    return response.content
-
 def translate_text(text: str) -> str:
     return GoogleTranslator(source='auto', target='en').translate(text) # free to choose target
 
 def main():
-    url = "https://www.tiktok.com/@emyemilia801/video/7453047804722679062?is_from_webapp=1"
-    soup = get_soup(url)
-    if soup is None:
-        print(f"Failed to fetch {url}")
-        return
-    print(extract_text(soup))
-    print(extract_links(soup, 'a'))
-    print(extract_images(soup, 'img'))
-    print(extract_video(soup, 'src'))
-    print(extract_title(soup))
-    print(extract_selector(soup, 'p'))
+    url = "https://miro.medium.com/v2/resize:fit:720/format:webp/0*xUYXAKdVxqYJsdZb.png"
+    # soup = get_soup(url)
+    # if soup is None:
+    #     print(f"Failed to fetch {url}")
+    #     return
+    # print(extract_text(soup))
+    # print(extract_links(soup, 'a'))
+    # print(extract_images(soup, 'img'))
+    # print(extract_video(soup, 'src'))
+    # print(extract_title(soup))
+    # print(extract_selector(soup, 'p'))
+    img = fetch_image(url)
+    cv2.imshow("image", img)
+    cv2.waitKey(0)
 
 
 if __name__ == '__main__':
