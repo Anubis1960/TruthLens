@@ -14,7 +14,7 @@ REF = db.reference(DB_REF)
 #
 #	CRUD operations
 #
-def validate_link(url: str) -> dict:
+def validate_link(url: str) -> dict[str, str] | None:
 	print(f'Service -> received link:{url}')
 
 	try:
@@ -25,6 +25,7 @@ def validate_link(url: str) -> dict:
 		# fetch link text and title
 		text = extract_text(get_soup(url))
 		title = extract_title(get_soup(url))
+		print(title)
 		predicted_text = predict(title, text)
 		print(f'Predicted text -> {predicted_text}')
 
@@ -34,14 +35,13 @@ def validate_link(url: str) -> dict:
 		if fetched_data:
 			print('Data exists')
 			# data exists
-
+			return None
 
 
 		else:
 			print('Data doesn\'t exist')
 			# no data
-
-
+			return None
 
 	except Exception as e:
 		return {'error': str(e)}

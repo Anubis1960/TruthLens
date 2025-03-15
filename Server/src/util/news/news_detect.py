@@ -1,7 +1,10 @@
 import os
 import re
+
+import nltk
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from nltk.corpus import stopwords
+nltk.download('stopwords')
 import pickle
 from dotenv import load_dotenv
 
@@ -55,9 +58,9 @@ def preprocess_text(text):
 
 def predict(title: str, text: str) -> str:
     # Preprocess text
+    print("asd")
     title = preprocess_text(title)
     text = preprocess_text(text)
-
     with open ('tokenizer.pickle', 'rb') as handle:
         tokenizer = pickle.load(handle)
 
@@ -66,7 +69,9 @@ def predict(title: str, text: str) -> str:
     seq = tokenizer.texts_to_sequences([content])
     pad = pad_sequences(seq, maxlen=MAXLEN, padding='post')
 
+    print(pad)
     pred = rf.predict(pad)
+    print(pred)
     print(list(NEWS_CLASS_MAPPING.keys())[list(NEWS_CLASS_MAPPING.values()).index(pred)])
     return list(NEWS_CLASS_MAPPING.keys())[list(NEWS_CLASS_MAPPING.values()).index(pred)]
 
