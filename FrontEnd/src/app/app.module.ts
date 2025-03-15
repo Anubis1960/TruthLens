@@ -27,7 +27,6 @@ import { HeaderComponent } from './components/header/header.component';
 import { ChatbotComponent } from './components/chatbot/chatbot.component';
 import { RegisterComponent } from './components/register/register.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
