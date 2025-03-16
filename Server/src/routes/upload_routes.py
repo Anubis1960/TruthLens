@@ -5,7 +5,8 @@ import numpy as np
 import io
 
 UPLOAD_URL = '/api/upload'
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'mp4', 'avi', 'mov', 'mkv'}
+
 
 upload_bp = Blueprint('upload', __name__, url_prefix=UPLOAD_URL)
 
@@ -37,3 +38,14 @@ def upload_file():
             return {'error': f'Fișier invalid: {file.filename}'}, HTTPStatus.BAD_REQUEST
 
     return {'message': '✅ Fișiere procesate!'}, HTTPStatus.OK
+@upload_bp.route('/video', methods=['POST'])
+def upload_video():
+    if 'video' not in request.files:
+        return {'error': 'Niciun fișier video trimis!'}, HTTPStatus.BAD_REQUEST
+
+    file = request.files['video']
+
+    if file and allowed_file(file.filename):
+        return {'message': f'✅ Videoclipul "{file.filename}" a fost primit cu succes!'}, HTTPStatus.OK
+    else:
+        return {'error': 'Fișier invalid!'}, HTTPStatus.BAD_REQUEST
