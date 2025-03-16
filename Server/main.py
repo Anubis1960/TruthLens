@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 from src.util.extensions import socketio
 from src.routes.user_routes import *
-#from src.routes.site_routes import *
+from src.routes.site_routes import *
 from src.routes.auth_routes import *
 from src.routes.upload_routes import *
 # import project source folder
@@ -29,7 +29,7 @@ socketio.init_app(app)
 #	Blueprints
 #
 app.register_blueprint(user_bp)
-#app.register_blueprint(site_bp)
+app.register_blueprint(site_bp)
 app.register_blueprint(auth_bp)
 app.register_blueprint(upload_bp)
 
