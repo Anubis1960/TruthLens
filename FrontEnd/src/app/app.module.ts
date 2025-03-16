@@ -26,6 +26,7 @@ import { MessagePanelComponent } from './components/message-panel/message-panel.
 import { HeaderComponent } from './components/header/header.component';
 import { ChatbotComponent } from './components/chatbot/chatbot.component';
 import { RegisterComponent } from './components/register/register.component';
+import { NewsComponent } from './components/news/news.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { RegisterComponent } from './components/register/register.component';
     HeaderComponent,
     ChatbotComponent,
     RegisterComponent,
+    NewsComponent
   ],
   imports: [
     BrowserModule,
