@@ -1,3 +1,4 @@
+/* Main wrapper for the news section */
 .news-wrapper {
   display: flex;
   justify-content: center;
@@ -6,7 +7,7 @@
   width: 100%;
 }
 
-/* Containerul principal care conține lista de știri și detaliile */
+/* Main container for news list and details */
 .news-container {
   display: flex;
   width: 80%;
@@ -18,20 +19,19 @@
   flex-direction: row;
 }
 
-/* Stânga - Lista de știri */
+/* Left side - News list */
 .news-list-container {
   width: 30%;
   height: 100%;
-  overflow-y: auto;
   background: #ffffff;
   border-right: 2px solid #ddd;
   padding: 15px;
   display: flex;
   flex-direction: column;
-  overflow: auto; 
+  overflow-y: auto; /* Ensure vertical scrolling */
 }
 
-/* Dreapta - Detaliile știrii */
+/* Right side - News details */
 .news-content-container {
   width: 70%;
   height: 100%;
@@ -42,17 +42,16 @@
   color: white;
 }
 
-/* Detalii știre */
+/* News details section */
 .news-detail {
   width: 100%;
   height: 100%;
   padding: 20px;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-  overflow: auto; 
-
+  overflow-y: auto; /* Ensure vertical scrolling */
 }
 
-/* Titlu și sursă știre */
+/* News title and source */
 .news-detail h2 {
   margin-bottom: 10px;
   color: white;
@@ -68,7 +67,7 @@
   line-height: 1.6;
 }
 
-/* Elemente din lista de știri */
+/* News list items */
 .message-item {
   padding: 12px;
   cursor: pointer;
@@ -82,4 +81,19 @@
 
 .message-item:active {
   background: #ccc;
+}
+
+/* Article links */
+.article-link {
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+}
+
+.article-link:visited {
+  color: rgb(253, 253, 255);
+}
+
+.article-link:hover {
+  color: darkblue;
+  text-decoration: underline;
 }

@@ -46,8 +46,8 @@ import { DialogComponent } from './components/dialog/dialog.component';
     ChatbotComponent,
     RegisterComponent,
     CallbackComponent,
-    NewsComponent,
     DialogComponent,
+    NewsComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,7 +67,6 @@ import { DialogComponent } from './components/dialog/dialog.component';
     MatTableModule,
     MatSortModule,
     MatDialogModule,
-
   ],
   providers: [
     provideHttpClient(withFetch()),

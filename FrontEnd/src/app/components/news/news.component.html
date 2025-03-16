@@ -1,23 +1,30 @@
 <app-sidebar></app-sidebar>
 <div class="news-wrapper">
-    <mat-card class="news-container">
-      
-      <!-- Left Side: News List -->
-      <div class="news-list-container">
-        <div *ngFor="let msg of news" (click)="onMessageSelected(msg)" class="message-item">
-          <strong>{{ msg.subject }}</strong> - {{ msg.source }}
-        </div>
+  <mat-card class="news-container">
+    
+    <!-- Left Side: News List -->
+    <div class="news-list-container">
+      <div *ngFor="let msg of news" (click)="onMessageSelected(msg)" class="message-item">
+        <strong>{{ msg.domain }}</strong> - Credible: {{ msg.stats.credible }}, Misinformation: {{ msg.stats.misinformation }}
       </div>
-  
-      <!-- Right Side: News Content -->
-      <div class="news-content-container">
-        <div *ngIf="selectedMsg" class="news-detail">
-          <h2>{{ selectedMsg.subject }}</h2>
-          <h4>From: {{ selectedMsg.source }}</h4>
-          <p>{{ selectedMsg.content }}</p>
-        </div>
+    </div>
+
+    <!-- Right Side: News Content -->
+    <div class="news-content-container">
+      <div *ngIf="selectedMsg" class="news-detail">
+        <h2>{{ selectedMsg.domain }}</h2>
+        <h4>Credible Articles: {{ selectedMsg.stats.credible }}</h4>
+        <h4>Misinformation Articles: {{ selectedMsg.stats.misinformation }}</h4>
+        <h4>Political Bias Articles: {{ selectedMsg.stats.political_bias }}</h4>
+        <h4>Unreliable Articles: {{ selectedMsg.stats.unreliable }}</h4>
+        <ul>
+          <li *ngFor="let article of Object.keys(selectedMsg.articles)">
+            <!-- Keep the <a> tag but style it to avoid purple visited links -->
+            <a [href]="article" target="_blank" class="article-link">{{ article }}</a> - {{ selectedMsg.articles[article] }}
+          </li>
+        </ul>
       </div>
-      
-    </mat-card>
-  </div>
-  
+    </div>
+    
+  </mat-card>
+</div>
