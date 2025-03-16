@@ -8,7 +8,7 @@
         <mat-form-field class="form-field">
           <mat-label>Paste your link here</mat-label>
           <input matInput type="text" [(ngModel)]="articleLink">
-          <button *ngIf="articleLink" matSuffix mat-icon-button aria-label="Clear" (click)="articleLink">
+          <button *ngIf="articleLink" matSuffix mat-icon-button aria-label="Clear" (click)="clearArticleLink()">
             <mat-icon>close</mat-icon>
           </button>
         </mat-form-field>

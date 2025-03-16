@@ -1,0 +1,26 @@
+.mat-dialog-container {
+    background-color: white !important;
+    color: black;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .mat-dialog-title {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  mat-dialog-content {
+    font-size: 16px;
+    color: #333;
+  }
+  .dialog-button{
+    width: 20%;
+    background-color: #697565;
+    color: white;
+    font-size: 14px;
+    padding: 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }

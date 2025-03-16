@@ -2,6 +2,8 @@ import { Component, ElementRef, Input, input, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { HttpClient} from '@angular/common/http';
 import { VerifyLinkService } from '../../services/verify-link.service';
+import { DialogComponent } from '../dialog/dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-verify-link',
   standalone: false,
@@ -12,7 +14,6 @@ export class VerifyLinkComponent {
   accept: any;
   deleteButtonLabel: any;
   event: any;
-
   articleLink = '';
   selected_type: string = '';
   @ViewChild('fileUpload')
@@ -22,8 +23,7 @@ export class VerifyLinkComponent {
   files: File[] = []
   videoFile: File | null = null;
   videoUrl: string | null = null;
-  
-  constructor(private sanitizer: DomSanitizer, private http: HttpClient, private linkService: VerifyLinkService){}
+  constructor(private sanitizer: DomSanitizer, private http: HttpClient, private linkService: VerifyLinkService, private dialog: MatDialog){}
 
   onClick(event: Event) {
     if (this.fileUpload)
@@ -94,7 +94,9 @@ export class VerifyLinkComponent {
       this.clearInputElement()
     }
   }
-
+  clearArticleLink(): void {
+    this.articleLink = '';
+  }
   validate(file: File) {
     for (const f of this.files) {
       if (f.name === file.name
@@ -133,22 +135,31 @@ export class VerifyLinkComponent {
   verify_site_link(link: string):void {
     this.linkService.verifySite(link).subscribe({
       next: (response: any) => {
-        console.log(response);
+        this.openDialog("The site is verified: " + response.message);      
       },
       error: (error: any) => {
-        console.log(error)
+        console.log(error);
+        this.openDialog("Verification failed: " + error.message);
       }
     })
+  }
+
+  openDialog(message: string): void {
+    console.log("Open dialog ba");
+    this.dialog.open(DialogComponent, {
+      data: { message },
+      width: '400px'
+    });
   }
 
   verify_image_link(link: string):void {
     this.linkService.verifyImage(link).subscribe({
       next: (response: any) => {
-        console.log(response);
+        this.openDialog("The image is verified: " + response.message);      
       },
-
       error: (error: any) => {
-        console.error(error)
+        console.error(error);
+        this.openDialog("Verification failed: " + error.message);
       }
     })
   }
@@ -157,10 +168,12 @@ export class VerifyLinkComponent {
     this.linkService.verifyVideo(link).subscribe({
       next: (response: any) => {
         console.log(response);
+        this.openDialog("The video is verified: " + response.message);      
       },
 
       error: (error: any) => {
         console.error(error);
+        this.openDialog("Verification failed: " + error.message);
       }
     })
   }
