@@ -15,17 +15,19 @@ site_bp = Blueprint('sites', __name__, url_prefix=SITE_URL)
 #
 
 # Article verify
-@site_bp.route('/video-link', methods=['POST'])
+@site_bp.route('/article-link', methods=['POST'])
 def verify_link() -> jsonify:
 	data = request.get_json()
-	print(data)
+	print(f'Received article request: {data}')
 
 	try:
 		# retrieve link from json
 		url = data['link']
+		print(f'Verifying link: {url}')
 
 		# response
 		response = validate_link(url)
+		print(f'Verified link response: {response}')
 
 		if 'error' in response:
 			return jsonify({'error': response['error']}), HTTPStatus.BAD_REQUEST

@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 import io
-from src.util.img.img_detect import predict_image
+from ..util.img.img_detect import predict_image
 
 
 def verify_img_file(file) -> dict:

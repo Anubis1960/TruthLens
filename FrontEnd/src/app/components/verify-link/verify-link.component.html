@@ -7,8 +7,8 @@
       <div class="form-container">
         <mat-form-field class="form-field">
           <mat-label>Paste your link here</mat-label>
-          <input matInput type="text" [(ngModel)]="value">
-          <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+          <input matInput type="text" [(ngModel)]="articleLink">
+          <button *ngIf="articleLink" matSuffix mat-icon-button aria-label="Clear" (click)="articleLink">
             <mat-icon>close</mat-icon>
           </button>
         </mat-form-field>
@@ -20,7 +20,7 @@
             <mat-option value="three">Video</mat-option>
           </mat-select>
         </mat-form-field>
-        <button class="confirm-button" (click)="onConfirm()">Confirm</button>
+        <button class="confirm-button" (click)="onConfirm(articleLink)">Confirm</button>
       </div>
     </mat-tab>
     <mat-tab label="Image">
