@@ -24,6 +24,6 @@ export class VerifyLinkService {
   uploadFile(formData: FormData): Observable<any> {
     return this.http.post<any>(`${BASE_URL}/api/upload/image`, formData);
   }
-  
+
 
 }

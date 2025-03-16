@@ -194,7 +194,7 @@ def main():
     # print(f"Total frames: {total_frames}")
     #get 5 frames from the video between 0 and total_frames
     # extract_frames("video.mp4", frames, "frame")
-    # fetch_video_from_streaming_service("https://www.youtube.com/shorts/3fQ3nAjT4e8", "../temp")
+    fetch_video_from_streaming_service("https://www.youtube.com/shorts/3fQ3nAjT4e8", "../temp")
     # text = transcript("/home/catalin/workspace/ITFest2025/Server/src/temp/d9fa31753f0e6db7.mp4")
     # pred = analyze_frames("temp.mp4", frames)
     # print(pred)
