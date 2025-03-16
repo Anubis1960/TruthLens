@@ -35,7 +35,7 @@ export class CallbackComponent {
 
 			console.log("User object:", user);
 			sessionStorage.setItem('user', JSON.stringify(user));
-			this.router.navigateByUrl('/home');
+			this.router.navigateByUrl('/verify');
 			
 			} else {
 				console.log("Session storage is not supported");

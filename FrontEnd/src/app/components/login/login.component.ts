@@ -26,7 +26,7 @@ export class LoginComponent {
       next: (data: User)=>{
         this.user = data;
         sessionStorage.setItem("user",JSON.stringify(this.user));
-        this.router.navigateByUrl('/home');
+        this.router.navigateByUrl('/verify');
       },
       error: (err) => {
         const errorMessage = err.error?.error || 'Invalid email or password';
