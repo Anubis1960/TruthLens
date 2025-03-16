@@ -176,3 +176,4 @@ node_modules
 .editorconfig
 __init__.py
 temp/
+faiss_db/

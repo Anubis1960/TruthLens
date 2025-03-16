@@ -26,4 +26,8 @@ PyPDF2
 deep_translator
 yt-dlp
 assemblyai
+tf-keras
+faiss-cpu
+pypdf
+smolagents[openai]
 

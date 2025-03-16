@@ -21,5 +21,9 @@ export class VerifyLinkService {
   verifyVideo(link:string){
     return this.http.post<any>(`${BASE_URL}/video`, {link});
   }
+  uploadFile(formData: FormData): Observable<any> {
+    return this.http.post<any>(`${BASE_URL}/api/upload/image`, formData);
+  }
+  
 
 }

@@ -1,1 +1,23 @@
-<p>news works!</p>
+<app-sidebar></app-sidebar>
+<div class="news-wrapper">
+    <mat-card class="news-container">
+      
+      <!-- Left Side: News List -->
+      <div class="news-list-container">
+        <div *ngFor="let msg of news" (click)="onMessageSelected(msg)" class="message-item">
+          <strong>{{ msg.subject }}</strong> - {{ msg.source }}
+        </div>
+      </div>
+  
+      <!-- Right Side: News Content -->
+      <div class="news-content-container">
+        <div *ngIf="selectedMsg" class="news-detail">
+          <h2>{{ selectedMsg.subject }}</h2>
+          <h4>From: {{ selectedMsg.source }}</h4>
+          <p>{{ selectedMsg.content }}</p>
+        </div>
+      </div>
+      
+    </mat-card>
+  </div>
+  
