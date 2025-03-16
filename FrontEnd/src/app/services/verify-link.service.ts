@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -17,14 +17,16 @@ export class VerifyLinkService {
     return this.http.post<any>(`${BASE_URL}/api/sites/article-link`, {link});
   }
 
-  verifyImage(link:string){
+  verifyImage(link: string): Observable<any>{
     console.log(link);
-    return this.http.post<any>(`${BASE_URL}/api/sites/image-url`, {link});
+    const params = new HttpParams().set('link', link)
+    return this.http.get(`${BASE_URL}/api/sites/image-url`, {params});
   }
 
-  verifyVideo(link:string){
+  verifyVideo(link: string): Observable<any>{
     console.log(link);
-    return this.http.post<any>(`${BASE_URL}/api/video-url`, {link});
+    const params = new HttpParams().set('link', link)
+    return this.http.get(`${BASE_URL}/api/video-url`, {params});
   }
 
   uploadFile(formData: FormData): Observable<any> {
