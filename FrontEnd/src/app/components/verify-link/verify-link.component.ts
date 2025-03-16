@@ -14,13 +14,16 @@ import { DialogComponent } from '../dialog/dialog.component';
 export class VerifyLinkComponent {
   articleLink = '';
   selected_type: string = '';
-  selectedImage: string | null = null; // To store the image preview URL
-  files: File[] = []; // To store the selected file(s)
-  videoFile: File | null = null;
-  videoUrl: string | null = null;
-  isUploading: boolean = false; 
+  selectedImage: string | null = null; // For image preview
+  files: File[] = []; // For image upload
+  videoFile: File | undefined; // For video upload
+  videoUrl: string | null = null; // For video preview
+  isUploading: boolean = false; // Loading state for image upload
+  isUploadingVideo: boolean = false; // Loading state for video upload
+  isVerifying: boolean = false; // Loading state for link verification
 
   @ViewChild('fileUpload') fileUpload!: ElementRef;
+  @ViewChild('videoUpload') videoUpload!: ElementRef;
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -29,15 +32,22 @@ export class VerifyLinkComponent {
     private dialog: MatDialog
   ) {}
 
-  // Trigger file input click
-  onClick(event: Event) {
+  // Trigger file input click for images
+  onClick(event: Event): void {
     if (this.fileUpload) {
       this.fileUpload.nativeElement.click();
     }
   }
 
-  // Handle file selection
-  onFileSelected(event: any) {
+  // Trigger file input click for videos
+  onClickVideoUpload(event: Event): void {
+    if (this.videoUpload) {
+      this.videoUpload.nativeElement.click();
+    }
+  }
+
+  // Handle image file selection
+  onFileSelected(event: any): void {
     const file = event.target.files[0];
     if (file) {
       this.files = [file]; // Store the selected file
@@ -45,30 +55,12 @@ export class VerifyLinkComponent {
     }
   }
 
-  // Upload the selected image
-  onUpload(): void {
-    if (this.files.length === 0) {
-      return;
+  // Handle video file selection
+  onVideoSelected(event: any): void {
+    if (event.target.files.length > 0) {
+      this.videoFile = event.target.files[0];
+      this.videoUrl = URL.createObjectURL(this.videoFile!); // Create a preview URL
     }
-  
-    this.isUploading = true; // Set loading state to true
-  
-    const formData = new FormData();
-    formData.append('files', this.files[0]);
-  
-    this.linkService.uploadFile(formData).subscribe({
-      next: (response: any) => {
-        console.log('Upload successful!', response);
-        this.openDialog('Image result: ' + response['prediction']);
-        this.clearImage(); // Clear the image after successful upload
-        this.isUploading = false; // Reset loading state
-      },
-      error: (error: any) => {
-        console.error('Upload failed!', error);
-        this.openDialog('Upload failed: ' + error.message);
-        this.isUploading = false; // Reset loading state
-      }
-    });
   }
 
   // Clear the selected image
@@ -76,103 +68,157 @@ export class VerifyLinkComponent {
     this.selectedImage = null;
     this.files = [];
     if (this.fileUpload) {
-      this.fileUpload.nativeElement.value = ''; // Clear the file input
+      this.fileUpload.nativeElement.value = ''; // Reset the file input
+    }
+  }
+
+  // Clear the selected video
+  clearVideoInput(): void {
+    this.videoFile = undefined ;
+    this.videoUrl = null;
+    if (this.videoUpload) {
+      this.videoUpload.nativeElement.value = ''; // Reset the file input
     }
   }
 
   // Clear the article link input
-  clearData(): void {
+  clearArticleLink(): void {
     this.articleLink = '';
     this.selected_type = '';
   }
 
-  // Handle video file selection
-  onVideoSelected(event: any) {
-    if (event.target.files.length > 0) {
-      this.videoFile = event.target.files[0];
+  // Upload the selected image
+  onUpload(): void {
+    if (this.files.length === 0) {
+      return;
     }
+
+    this.isUploading = true; // Set loading state to true
+
+    const formData = new FormData();
+    formData.append('files', this.files[0]);
+
+    this.linkService.uploadFile(formData).subscribe({
+      next: (response: any) => {
+        this.openDialog('Image uploaded successfully!').afterClosed().subscribe(() => {
+          this.clearImage(); // Clear the image after the dialog is closed
+          this.isUploading = false; // Reset loading state
+        });
+      },
+      error: (error: any) => {
+        this.openDialog('Upload failed: ' + error.message).afterClosed().subscribe(() => {
+          this.clearImage(); // Clear the image after the dialog is closed
+          this.isUploading = false; // Reset loading state
+        });
+      }
+    });
   }
 
   // Upload the selected video
-  onUploadVideo() {
+  onUploadVideo(): void {
     if (!this.videoFile) {
       console.error('No video file selected!');
       return;
     }
 
+    this.isUploadingVideo = true; // Set loading state to true
+
     const formData = new FormData();
     formData.append('video', this.videoFile);
 
     this.http.post('http://localhost:5000/api/upload/video', formData).subscribe({
-      next: (response) => {
-        console.log('Upload successful!', response);
+      next: (response: any) => {
+        this.openDialog('Video uploaded successfully!').afterClosed().subscribe(() => {
+          this.clearVideoInput(); // Clear the video after the dialog is closed
+          this.isUploadingVideo = false; // Reset loading state
+        });
       },
       error: (err) => {
-        console.error('Upload failed!', err);
+        this.openDialog('Upload failed: ' + err.message).afterClosed().subscribe(() => {
+          this.clearVideoInput(); // Clear the video after the dialog is closed
+          this.isUploadingVideo = false; // Reset loading state
+        });
       }
-    });
-  }
-
-  // Open a dialog with a message
-  openDialog(message: string): void {
-    this.dialog.open(DialogComponent, {
-      data: { message },
-      width: '400px'
     });
   }
 
   // Handle confirmation based on the selected type
   onConfirm(link: string): void {
-    if (this.selected_type === 'article') {
-      this.verify_site_link(link);
-  
-    } else if (this.selected_type === 'image') {
-      this.verify_image_link(link);
+    if (!link || !this.selected_type) {
+      return;
+    }
 
+    this.isVerifying = true; // Set loading state to true
+
+    if (this.selected_type === 'article') {
+      this.verify_site_link(link).subscribe({
+        next: (response: any) => {
+          this.openDialog("Article result: " + response['verdict']).afterClosed().subscribe(() => {
+            this.clearArticleLink(); // Clear the link input after the dialog is closed
+            this.isVerifying = false; // Reset loading state
+          });
+        },
+        error: (error: any) => {
+          this.openDialog("Verification failed: " + error.message).afterClosed().subscribe(() => {
+            this.clearArticleLink(); // Clear the link input after the dialog is closed
+            this.isVerifying = false; // Reset loading state
+          });
+        }
+      });
+    } else if (this.selected_type === 'image') {
+      this.verify_image_link(link).subscribe({
+        next: (response: any) => {
+          this.openDialog("Image result: " + response['prediction']).afterClosed().subscribe(() => {
+            this.clearArticleLink(); // Clear the link input after the dialog is closed
+            this.isVerifying = false; // Reset loading state
+          });
+        },
+        error: (error: any) => {
+          this.openDialog("Verification failed: " + error.message).afterClosed().subscribe(() => {
+            this.clearArticleLink(); // Clear the link input after the dialog is closed
+            this.isVerifying = false; // Reset loading state
+          });
+        }
+      });
     } else if (this.selected_type === 'video') {
-      this.verify_video_link(link);
+      this.verify_video_link(link).subscribe({
+        next: (response: any) => {
+          this.openDialog("Provided video is " + response['video'] + " with " + response['audio'] + " criteria.").afterClosed().subscribe(() => {
+            this.clearArticleLink(); // Clear the link input after the dialog is closed
+            this.isVerifying = false; // Reset loading state
+          });
+        },
+        error: (error: any) => {
+          this.openDialog("Verification failed: " + error.message).afterClosed().subscribe(() => {
+            this.clearArticleLink(); // Clear the link input after the dialog is closed
+            this.isVerifying = false; // Reset loading state
+          });
+        }
+      });
     }
   }
 
-  // Verify site link
-  verify_site_link(link: string): void {
-    this.linkService.verifySite(link).subscribe({
-      next: (response: any) => {
-        this.openDialog('Article result: ' + response['verdict']);
-        this.clearData();
-      },
-      error: (error: any) => {
-        console.error(error);
-        this.openDialog('Verification failed: ' + error.message);
-      }
+  // Open a dialog with a message
+  openDialog(message: string): any {
+    return this.dialog.open(DialogComponent, {
+      data: { message },
+      width: '400px'
     });
+  }
+
+  // Verify site link
+  verify_site_link(link: string): any {
+    return this.linkService.verifySite(link);
   }
 
   // Verify image link
-  verify_image_link(link: string): void {
-    this.linkService.verifyImage(link).subscribe({
-      next: (response: any) => {
-        this.openDialog('Image result: ' + response['prediction']);
-        this.clearData();
-      },
-      error: (error: any) => {
-        console.error(error);
-        this.openDialog('Verification failed: ' + error.message);
-      }
-    });
+  verify_image_link(link: string): any {
+    return this.linkService.verifyImage(link);
   }
 
   // Verify video link
-  verify_video_link(link: string): void {
-    this.linkService.verifyVideo(link).subscribe({
-      next: (response: any) => {
-        this.openDialog('Provided video is ' + response['video'] + ' with ' + response['audio'] + ' criteria.');
-        this.clearData();
-      },
-      error: (error: any) => {
-        console.error(error);
-        this.openDialog('Verification failed: ' + error.message);
-      }
-    });
+  verify_video_link(link: string): any {
+    console.log(link)
+    return this.linkService.verifyVideo(link);
   }
 }

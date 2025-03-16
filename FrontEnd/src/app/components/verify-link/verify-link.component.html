@@ -3,12 +3,13 @@
   <h1 class="form-title">TruthLens</h1>
   <h2 class="form-subtitle">Ready to check a link? Drop it down here!</h2>
   <mat-tab-group class="tab">
+    <!-- Link Tab -->
     <mat-tab label="Link">
       <div class="form-container">
         <mat-form-field class="form-field">
           <mat-label>Paste your link here</mat-label>
           <input matInput type="text" [(ngModel)]="articleLink">
-          <button *ngIf="articleLink" matSuffix mat-icon-button aria-label="Clear" (click)="clearData()">
+          <button *ngIf="articleLink" matSuffix mat-icon-button aria-label="Clear" (click)="clearArticleLink()">
             <mat-icon>close</mat-icon>
           </button>
         </mat-form-field>
@@ -20,10 +21,13 @@
             <mat-option value="video">Video</mat-option>
           </mat-select>
         </mat-form-field>
-        <button class="confirm-button" (click)="onConfirm(articleLink)">Confirm</button>
+        <button class="confirm-button" (click)="onConfirm(articleLink)" [disabled]="isVerifying || !articleLink || !selected_type">
+          {{ isVerifying ? 'Verifying...' : 'Confirm' }}
+        </button>
       </div>
     </mat-tab>
-    
+
+    <!-- Image Tab -->
     <mat-tab label="Image">
       <div class="form-container">
         <!-- File input (hidden) -->
@@ -44,16 +48,43 @@
             <button class="delete-button" (click)="clearImage()">
               <mat-icon>delete</mat-icon>
             </button>
-            <button class="confirm-button" (click)="onUpload()">Confirm</button>
+            <button class="confirm-button" (click)="onUpload()" [disabled]="isUploading">
+              {{ isUploading ? 'Uploading...' : 'Confirm' }}
+            </button>
           </div>
         </div>
       </div>
     </mat-tab>
 
+    <!-- Video Tab -->
     <mat-tab label="Video">
       <div class="form-container">
-        <input type="file" (change)="onVideoSelected($event)" accept="video/*">
-        <button mat-raised-button color="primary" (click)="onUploadVideo()">Upload Video</button>
+        <!-- File input (hidden) -->
+        <input #videoUpload
+          type="file"
+          class="input_fileupload--hidden"
+          (change)="onVideoSelected($event)"
+          accept="video/*"
+        />
+        <!-- Insert button -->
+        <button class="custom-insert-button" (click)="onClickVideoUpload($event)">
+          <mat-icon>upload</mat-icon> Insert Video
+        </button>
+        <!-- Display selected video and delete button -->
+        <div *ngIf="videoFile" class="video-preview">
+          <video controls class="preview-video">
+            <source [src]="videoUrl" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <div class="video-actions">
+            <button class="delete-button" (click)="clearVideoInput()">
+              <mat-icon>delete</mat-icon>
+            </button>
+            <button class="confirm-button" (click)="onUploadVideo()" [disabled]="isUploadingVideo">
+              {{ isUploadingVideo ? 'Uploading...' : 'Confirm' }}
+            </button>
+          </div>
+        </div>
       </div>
     </mat-tab>
   </mat-tab-group>
