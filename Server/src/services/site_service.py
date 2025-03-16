@@ -11,6 +11,12 @@ from ..util.database import db
 from ..util.news.news_detect import NEWS_CLASS_MAPPING
 from ..util.img.img_detect import predict_image
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+TEMP_DIR = os.path.join(BASE_DIR, "..", "temp")
+
+if not os.path.exists(TEMP_DIR):
+	os.makedirs(TEMP_DIR)
+
 #
 #	Path for sites
 #
@@ -74,26 +80,26 @@ def validate_link(url: str) -> dict:
 
 def validate_video_link(link: str) -> dict:
 	try:
-
+		# Random generated file name
 		file_name = os.urandom(8).hex()
 
-		out_path = f"temp/{file_name}"
+		# Saving path
+		out_path = os.path.join(TEMP_DIR, file_name)
 		title = fetch_video_from_streaming_service(link, out_path)
 
-		total_frames = get_total_frames(out_path)
-
+		# Retrieve random captures
+		total_frames = get_total_frames(out_path + ".mp4")
 		frames = np.random.randint(0, total_frames, 5)
 
 		prediction = analyze_frames(f"{out_path}.mp4", frames)
+		if prediction > 0.7:
+			prediction = 'AI Generated'
 
-		print(prediction)
+		else:
+			prediction = 'Real'
 
 		text = transcript(link)
-
 		verdict = predict_text(title, text)
-
-		print(verdict)
-
 		return {"audio": verdict, "video": prediction}
 
 	except Exception as e:
@@ -104,11 +110,15 @@ def validate_video_link(link: str) -> dict:
 def validate_image_link(link: str) -> dict:
 	try:
 		img = fetch_image(link)
-
 		if img is None:
 			return {"error": "Failed to fetch image."}
 
 		prediction = predict_image(img)
+		if prediction > 0.7:
+			prediction = 'AI Generated'
+
+		else:
+			prediction = 'Real'
 
 		return {"prediction": prediction}
 

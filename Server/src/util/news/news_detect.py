@@ -10,11 +10,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-rf_path = os.getenv("RR_MODEL")
 seq_path = os.getenv("SEQ_MODEL")
-
-with open(rf_path, "rb") as f:
-    rf = pickle.load(f)
 
 MAXLEN = 250
 
@@ -68,15 +64,13 @@ def predict_text(title: str, text: str) -> str:
     content = "<title>" + title + "</title> <content>" + text + "</content>"
     seq = tokenizer.texts_to_sequences([content])
     pad = pad_sequences(seq, maxlen=MAXLEN, padding='post')
-    pred = rf.predict(pad)
     seq_model = tf.keras.models.load_model(seq_path)
     seq_pred = seq_model.predict(pad)
     print(seq_pred)
     max_pred = seq_pred.argmax()
     print(max_pred)
     print(list(NEWS_CLASS_MAPPING.keys())[list(NEWS_CLASS_MAPPING.values()).index(max_pred)])
-    print(list(NEWS_CLASS_MAPPING.keys())[list(NEWS_CLASS_MAPPING.values()).index(pred)])
-    return list(NEWS_CLASS_MAPPING.keys())[list(NEWS_CLASS_MAPPING.values()).index(pred)]
+    return list(NEWS_CLASS_MAPPING.keys())[list(NEWS_CLASS_MAPPING.values()).index(max_pred)]
 
 def main():
     title = "The Quantum Ledger Initiative (QLI)"

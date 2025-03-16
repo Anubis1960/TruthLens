@@ -18,16 +18,13 @@ site_bp = Blueprint('sites', __name__, url_prefix=SITE_URL)
 @site_bp.route('/article-link', methods=['POST'])
 def verify_link() -> jsonify:
 	data = request.get_json()
-	print(f'Received article request: {data}')
 
 	try:
 		# retrieve link from json
 		url = data['link']
-		print(f'Verifying link: {url}')
 
 		# response
 		response = validate_link(url)
-		print(f'Verified link response: {response}')
 
 		if 'error' in response:
 			return jsonify({'error': response['error']}), HTTPStatus.BAD_REQUEST
@@ -37,13 +34,14 @@ def verify_link() -> jsonify:
 	except Exception as e:
 		return jsonify({'error': str(e)}), HTTPStatus.BAD_REQUEST
 
-@site_bp.route('/video-url', methods=['GET'])
+@site_bp.route('/video-url', methods=['POST'])
 def verify_video_url() -> jsonify:
-	url = request.args.get('url')
+	url = request.get_json()
 
 	try:
 		# response
-		response = validate_video_link(url)
+		response = validate_video_link(url['link'])
+		print(f'Verified video response: {response}')
 
 		if 'error' in response:
 			return jsonify({'error': response['error']}), HTTPStatus.BAD_REQUEST
@@ -53,13 +51,13 @@ def verify_video_url() -> jsonify:
 	except Exception as e:
 		return jsonify({'error': str(e)}), HTTPStatus.BAD_REQUEST
 
-@site_bp.route("/image-url", methods=['GET'])
+@site_bp.route("/image-url", methods=['POST'])
 def verify_image_url() -> jsonify:
-	url = request.args.get('url')
+	url = request.get_json()
 
 	try:
 		# response
-		response = validate_image_link(url)
+		response = validate_image_link(url['link'])
 
 		if 'error' in response:
 			return jsonify({'error': response['error']}), HTTPStatus.BAD_REQUEST
