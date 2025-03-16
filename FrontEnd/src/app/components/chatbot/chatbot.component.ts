@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Message } from '../../utils/message';
 import { v4 as uuidv4} from 'uuid';
+import {HttpClient, HttpParams} from '@angular/common/http';
 @Component({
   selector: 'app-chatbot',
   standalone: false,
@@ -11,8 +12,11 @@ export class ChatbotComponent {
   data: Message[] = [];
   showChatbot: boolean = false;
 
+  constructor(private http: HttpClient) {
+  }
+
   toggleChatbot() {
-    this.showChatbot = !this.showChatbot; 
+    this.showChatbot = !this.showChatbot;
   }
 
   getMessage($event: string) {
@@ -23,15 +27,27 @@ export class ChatbotComponent {
       dateTime: new Date()
     }
     this.data.push(messageObj);
-    // Simulate bot response after 1 second
-    setTimeout(() => {
-      const botMessageObj: Message = {
-        id: uuidv4(),
-        sender: 'bot',
-        content: 'This is a bot response.',
-        dateTime: new Date(),
-      };
-      this.data.push(botMessageObj);
-    }, 1000);
+
+    const body = {
+      prompt: $event
+    }
+
+    this.http.post('http://localhost:5000/api/chat/send', body).subscribe({
+      next: (data: any) => {
+
+        let response = data['response'];
+
+        const botMessageObj: Message = {
+          id: uuidv4(),
+          sender: 'bot',
+          content: response,
+          dateTime: new Date(),
+        };
+        this.data.push(botMessageObj);
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
   }
 }
