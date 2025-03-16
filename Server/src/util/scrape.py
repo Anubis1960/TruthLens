@@ -10,8 +10,8 @@ import cv2
 import numpy as np
 import yt_dlp
 from dotenv import load_dotenv
-from src.util.img.img_detect import predict_image
-from src.util.news.news_detect import predict_text
+from ..util.img.img_detect import predict_image
+from ..util.news.news_detect import predict_text
 
 # load .env file
 load_dotenv()

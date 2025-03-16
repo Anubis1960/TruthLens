@@ -19,14 +19,12 @@ export class VerifyLinkService {
 
   verifyImage(link: string): Observable<any>{
     console.log(link);
-    const params = new HttpParams().set('link', link)
-    return this.http.get(`${BASE_URL}/api/sites/image-url`, {params});
+    return this.http.post(`${BASE_URL}/api/sites/image-url`, {link});
   }
 
   verifyVideo(link: string): Observable<any>{
     console.log(link);
-    const params = new HttpParams().set('link', link)
-    return this.http.get(`${BASE_URL}/api/video-url`, {params});
+    return this.http.post(`${BASE_URL}/api/sites/video-url`, {link});
   }
 
   uploadFile(formData: FormData): Observable<any> {
