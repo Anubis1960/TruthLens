@@ -116,3 +116,45 @@ def validate_image_link(link: str) -> dict:
 		# Log the error and return an error message
 		print(f"Error validating image link: {e}")
 		return {"error": f"Failed to validate image link: {str(e)}"}
+
+def get_site_stats() -> list:
+	try:
+		# Fetch all sites
+		sites = list(db.collection(SITES_COLLECTION).select(['stats', 'domain']).stream())
+		# Return stats
+		return sites
+
+	except Exception as e:
+		# Log the error and return an error message
+		print(f"Error fetching site stats: {e}")
+		return []
+
+def get_articles_by_domain(domain: str) -> dict:
+	try:
+		# Fetch domain
+		domain_ref = db.collection(SITES_COLLECTION).document(domain).get()
+
+		# Check domain existence
+		if domain_ref.exists:
+			site_data = domain_ref.to_dict()
+			articles = site_data.get('articles', [])
+			return articles
+
+		return {"error": "Domain not found."}
+
+	except Exception as e:
+		# Log the error and return an error message
+		print(f"Error fetching articles by domain: {e}")
+		return {"error": f"Failed to fetch articles by domain: {str(e)}"}
+
+def get_all_sites() -> list:
+	try:
+		# Fetch all sites
+		sites = list(db.collection(SITES_COLLECTION).stream())
+		# Return sites
+		return sites
+
+	except Exception as e:
+		# Log the error and return an error message
+		print(f"Error fetching all sites: {e}")
+		return []

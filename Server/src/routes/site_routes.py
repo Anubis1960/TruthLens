@@ -67,3 +67,41 @@ def verify_image_url() -> jsonify:
 	except Exception as e:
 		return jsonify({'error': str(e)}), HTTPStatus.BAD_REQUEST
 
+
+@site_bp.route("/stats", methods=['GET'])
+def get_stats() -> jsonify:
+	try:
+		# response
+		response = get_site_stats()
+		return jsonify(response), HTTPStatus.OK
+
+	except Exception as e:
+		return jsonify({'error': str(e)}), HTTPStatus.BAD_REQUEST
+
+@site_bp.route("/articles", methods=['GET'])
+def get_articles() -> jsonify:
+	try:
+		data = request.get_json()
+
+		if 'domain' not in data:
+			return jsonify({'error': 'No domain provided'}), HTTPStatus.BAD_REQUEST
+
+		res = get_articles_by_domain(data['domain'])
+
+		if 'error' in res:
+			return jsonify({'error': res['error']}), HTTPStatus.BAD_REQUEST
+
+		return jsonify(res), HTTPStatus.OK
+
+	except Exception as e:
+		return jsonify({'error': str(e)}), HTTPStatus.BAD_REQUEST
+
+@site_bp.route("/", methods=['GET'])
+def get_all_sites() -> jsonify:
+	try:
+		# response
+		response = get_all_sites()
+		return jsonify(response), HTTPStatus.OK
+
+	except Exception as e:
+		return jsonify({'error': str(e)}), HTTPStatus.BAD_REQUEST
