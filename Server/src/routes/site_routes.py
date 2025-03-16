@@ -97,11 +97,21 @@ def get_articles() -> jsonify:
 		return jsonify({'error': str(e)}), HTTPStatus.BAD_REQUEST
 
 @site_bp.route("/", methods=['GET'])
-def get_all_sites() -> jsonify:
+def get_sites() -> jsonify:
 	try:
 		# response
-		response = get_all_sites()
-		return jsonify(response), HTTPStatus.OK
+		res = get_all_sites()
+		return jsonify(res), HTTPStatus.OK
+
+	except Exception as e:
+		return jsonify({'error': str(e)}), HTTPStatus.BAD_REQUEST
+
+@site_bp.route("/domains", methods=['GET'])
+def get_domains() -> jsonify:
+	try:
+		# response
+		res = get_all_domains()
+		return jsonify(res), HTTPStatus.OK
 
 	except Exception as e:
 		return jsonify({'error': str(e)}), HTTPStatus.BAD_REQUEST

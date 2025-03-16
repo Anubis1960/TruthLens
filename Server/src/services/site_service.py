@@ -117,42 +117,79 @@ def validate_image_link(link: str) -> dict:
 		print(f"Error validating image link: {e}")
 		return {"error": f"Failed to validate image link: {str(e)}"}
 
-def get_site_stats() -> list:
+def get_site_stats() -> list[dict]:
 	try:
 		# Fetch all sites
-		sites = list(db.collection(SITES_COLLECTION).select(['stats', 'domain']).stream())
-		# Return stats
-		return sites
+		sites = db.collection(SITES_COLLECTION).stream()
+
+		# Extract 'stats' and 'domain' fields from each document
+		site_stats = []
+		for site in sites:
+			site_data = site.to_dict()
+			stats = site_data.get('stats')
+			domain = site_data.get('domain')
+
+			# Include only if both 'stats' and 'domain' are present
+			if stats is not None and domain is not None:
+				site_stats.append({'stats': stats, 'domain': domain})
+
+		# Return the list of site stats
+		return site_stats
 
 	except Exception as e:
-		# Log the error and return an error message
+		# Log the error and return an empty list
 		print(f"Error fetching site stats: {e}")
 		return []
 
-def get_articles_by_domain(domain: str) -> dict:
+def get_articles_by_domain(domain: str) -> list:
 	try:
-		# Fetch domain
+		# Fetch the domain document
 		domain_ref = db.collection(SITES_COLLECTION).document(domain).get()
 
-		# Check domain existence
+		# Check if the domain document exists
 		if domain_ref.exists:
 			site_data = domain_ref.to_dict()
-			articles = site_data.get('articles', [])
-			return articles
+			articles = site_data.get('articles', {})
 
-		return {"error": "Domain not found."}
+			# Convert the articles dictionary into a list of article data
+			if isinstance(articles, dict):
+				return list(articles.items())
+			else:
+				print(f"Unexpected format for 'articles' field in domain '{domain}'")
+				return []
+
+		# If the domain does not exist, return an empty list
+		return []
 
 	except Exception as e:
 		# Log the error and return an error message
-		print(f"Error fetching articles by domain: {e}")
-		return {"error": f"Failed to fetch articles by domain: {str(e)}"}
+		print(f"Error fetching articles for domain '{domain}': {e}")
+		return []
 
-def get_all_sites() -> list:
+def get_all_domains() -> list:
 	try:
 		# Fetch all sites
 		sites = list(db.collection(SITES_COLLECTION).stream())
-		# Return sites
-		return sites
+		# Extract domain from each DocumentSnapshot
+		domains = [site.id for site in sites]
+
+		# Return the list of domains
+		return domains
+
+	except Exception as e:
+		# Log the error and return an error message
+		print(f"Error fetching all domains: {e}")
+		return []
+
+def get_all_sites() -> list[dict]:
+	try:
+		# Fetch all sites
+		sites = list(db.collection(SITES_COLLECTION).stream())
+		# Extract data from each DocumentSnapshot and convert to a list of dictionaries
+		sites_data = [site.to_dict() for site in sites]
+
+		# Return the list of site data
+		return sites_data
 
 	except Exception as e:
 		# Log the error and return an error message
