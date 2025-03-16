@@ -1,21 +1,28 @@
-import tempfile
-
 import numpy as np
 import cv2
 from io import BytesIO
+
+from assemblyai import transcriber
 from pydub import AudioSegment
 import assemblyai as aai
 from ..util.img.img_detect import predict_image
 
-from src.util.scrape import get_total_frames, analyze_frames
+from src.util.scrape import get_total_frames, analyze_frames, transcript
+import os
 
+from ..util.news.news_detect import predict_text
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+TEMP_DIR = os.path.join(BASE_DIR, "..", "temp")
+
+if not os.path.exists(TEMP_DIR):
+    os.makedirs(TEMP_DIR)
 
 def verify_img_file(file) -> dict:
     """
     Verify if the file extension is allowed.
 
     :param file:
-    :param file_name: The file name.
     :return: True if the file extension is allowed, False otherwise.
     """
     allowed_extensions = ['png', 'jpg', 'jpeg']
@@ -59,18 +66,34 @@ def verify_video(file):
         file_bytes = file.read()
 
         # Write the video bytes to a temporary file
-        with tempfile.NamedTemporaryFile(suffix=f".{file_extension}", delete=True) as temp_file:
-            temp_file_path = temp_file.name
-            temp_file.write(file_bytes)
 
-        total_frames = get_total_frames(temp_file_path)
+        # Random generated file name
+        file_name = os.urandom(8).hex()
+
+        # Saving path
+        out_path = os.path.join(TEMP_DIR, file_name)
+
+        with open(out_path + '.mp4', 'wb') as f:
+            f.write(file_bytes)
+        total_frames = get_total_frames(out_path + '.mp4')
         frames = np.random.randint(0, total_frames, 5)
         print(frames)
 
-        pred = analyze_frames(temp_file_path, frames)
+        pred = analyze_frames(out_path + '.mp4', frames)
         print(pred)
 
-        return {'prediction': pred}
+        ts = transcript(out_path + '.mp4')
+
+        title = ""
+
+        verdict = predict_text(title, ts)
+
+        if pred[0] > 0.7:
+            pred = 'AI Generated'
+        else:
+            pred = 'Real'
+
+        return {'video': pred, 'audio': verdict}
 
 
 
