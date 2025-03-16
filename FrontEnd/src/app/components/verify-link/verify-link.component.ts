@@ -100,7 +100,7 @@ export class VerifyLinkComponent {
 
     this.linkService.uploadFile(formData).subscribe({
       next: (response: any) => {
-        this.openDialog('Image uploaded successfully!').afterClosed().subscribe(() => {
+        this.openDialog("Image result: " + response['prediction']).afterClosed().subscribe(() => {
           this.clearImage(); // Clear the image after the dialog is closed
           this.isUploading = false; // Reset loading state
         });
@@ -128,7 +128,7 @@ export class VerifyLinkComponent {
 
     this.http.post('http://localhost:5000/api/upload/video', formData).subscribe({
       next: (response: any) => {
-        this.openDialog('Video uploaded successfully!').afterClosed().subscribe(() => {
+        this.openDialog("Provided video is " + response['video'] + " with " + response['audio'] + " criteria.").afterClosed().subscribe(() => {
           this.clearVideoInput(); // Clear the video after the dialog is closed
           this.isUploadingVideo = false; // Reset loading state
         });

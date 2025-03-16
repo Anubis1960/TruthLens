@@ -92,7 +92,7 @@ def validate_video_link(link: str) -> dict:
 		frames = np.random.randint(0, total_frames, 5)
 
 		prediction = analyze_frames(f"{out_path}.mp4", frames)
-		if prediction > 0.7:
+		if prediction > 0.5:
 			prediction = 'AI Generated'
 
 		else:

@@ -2,322 +2,322 @@
 /* General Container Styling */
 /* ============================= */
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: #1E201E;
-    padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #1E201E;
+  padding: 20px;
 }
 
 /* ============================= */
 /* Title & Subtitle Styling */
 /* ============================= */
 .form-title {
-    color: #ECDFCC;
-    font-size: 70px;
-    margin-bottom: 5px;
-    font-weight: bold;
+  color: #ECDFCC;
+  font-size: 70px;
+  margin-bottom: 5px;
+  font-weight: bold;
 }
 
 .form-subtitle {
-    color: #ECDFCC;
-    font-size: 24px;
-    text-align: center;
-    font-weight: bold;
-    margin-bottom: 20px;
-    font-family: 'Arial', sans-serif;
-    line-height: 1.5;
-    position: relative;
+  color: #ECDFCC;
+  font-size: 24px;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 20px;
+  font-family: 'Arial', sans-serif;
+  line-height: 1.5;
+  position: relative;
 }
 
 /* Add quotes around the subtitle */
 .form-subtitle::before, .form-subtitle::after {
-    content: '"';
-    font-size: 35px;
-    position: absolute;
-    top: -5px;
+  content: '"';
+  font-size: 35px;
+  position: absolute;
+  top: -5px;
 }
 
 .form-subtitle::before {
-    left: -35px;
+  left: -35px;
 }
 
 .form-subtitle::after {
-    right: -35px;
+  right: -35px;
 }
 
 /* ============================= */
 /* Form Container Styling */
 /* ============================= */
 .form-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: #697565;
-    border-radius: 8px;
-    padding: 20px;
-    width: 100%;
-    max-width: 500px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
-    height: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #697565;
+  border-radius: 8px;
+  padding: 20px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+  height: 250px;
 }
 
 /* ============================= */
 /* Input & Form Fields */
 /* ============================= */
 mat-form-field.form-field {
-    width: 100%;
+  width: 100%;
 }
 
 mat-form-field .mat-mdc-text-field-wrapper {
-    background-color: #ECDFCC !important;
-    color: #1E201E !important;
-    border-radius: 4px;
+  background-color: #ECDFCC !important;
+  color: #1E201E !important;
+  border-radius: 4px;
 }
 
 /* Mat label styling */
 mat-label {
-    color: #000 !important;
+  color: #000 !important;
 }
 
 /* Button inside the input field (clear button) */
 button[mat-icon-button] {
-    background-color: transparent !important;
-    border: none;
+  background-color: transparent !important;
+  border: none;
 }
 
 /* Close icon inside the button */
 mat-icon {
-    color: #1E201E;
+  color: #1E201E;
 }
 
 /* Hover effect for the clear button */
 button[mat-icon-button]:hover {
-    background-color: #565c54;
-    border-radius: 50%;
+  background-color: #565c54;
+  border-radius: 50%;
 }
 
 /* Focus effect on input fields */
 mat-form-field.mat-focused .mat-mdc-text-field-wrapper {
-    outline: 2px solid #ECDFCC;
+  outline: 2px solid #ECDFCC;
 }
 
 /* ============================= */
 /* Confirm Button Styling */
 /* ============================= */
 .confirm-button {
-    background-color: #ECDFCC;
-    color: #1E201E;
-    font-size: 16px;
-    padding: 12px 24px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    text-align: center;
-    font-weight: bold;
-    transition: all 0.3s ease;
-    margin-top: 10px;
+  background-color: #ECDFCC;
+  color: #1E201E;
+  font-size: 16px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  margin-top: 10px;
 }
 
 .delete-buton{
-    background-color: #D1C6A1;
-    color: #1E201E;
-    font-size: 14px;
-    padding: 6px 12px; /* Smaller padding */
-    border-radius: 4px;
-    margin-left: 10px;
-    transition: background-color 0.3s ease;
+  background-color: #D1C6A1;
+  color: #1E201E;
+  font-size: 14px;
+  padding: 6px 12px; /* Smaller padding */
+  border-radius: 4px;
+  margin-left: 10px;
+  transition: background-color 0.3s ease;
 }
 .form-container > div {
-    background-color: #D1C6A1; /* Light background for each file */
-    color: #1E201E;
-    border-radius: 6px;
-    padding: 10px;
-    margin: 5px 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 100%;
-    width: 50%;
+  background-color: #D1C6A1; /* Light background for each file */
+  color: #1E201E;
+  border-radius: 6px;
+  padding: 10px;
+  margin: 5px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 100%;
+  width: 50%;
 }
 /* Hover effect */
 .confirm-button:hover {
-    background-color: #D1C6A1;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  background-color: #D1C6A1;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 /* Focus effect */
 .confirm-button:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(26, 30, 26, 0.5);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(26, 30, 26, 0.5);
 }
 
 /* Active state */
 .confirm-button:active {
-    transform: scale(0.98);
-    background-color: #C0B08A;
+  transform: scale(0.98);
+  background-color: #C0B08A;
 }
 
 /* Disabled button */
 .confirm-button:disabled {
-    background-color: #D1C6A1;
-    cursor: not-allowed;
-    opacity: 0.7;
+  background-color: #D1C6A1;
+  cursor: not-allowed;
+  opacity: 0.7;
 }
 
 /* ============================= */
 /* Angular Material Tabs Styling */
 /* ============================= */
 mat-tab-group {
-    width: 100%;
-    max-width: 540px;
-    background-color: #3C3D37;
-    border-radius: 12px; /* Rounded corners added */
-    border: none;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
-    margin-top: 20px;
-    overflow: hidden; /* Ensures corners stay rounded */
+  width: 100%;
+  max-width: 540px;
+  background-color: #3C3D37;
+  border-radius: 12px; /* Rounded corners added */
+  border: none;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+  margin-top: 20px;
+  overflow: hidden; /* Ensures corners stay rounded */
 }
 
 /* Tab Header */
 ::ng-deep .mat-mdc-tab-header {
-    background-color: #3C3D37;
-    border-top-left-radius: 12px; /* Rounds top corners */
-    border-top-right-radius: 12px;
-    overflow: hidden;
+  background-color: #3C3D37;
+  border-top-left-radius: 12px; /* Rounds top corners */
+  border-top-right-radius: 12px;
+  overflow: hidden;
 }
 
 /* Tab Labels */
 ::ng-deep .mdc-tab__text-label {
-    color: #D1C6A1 !important;
-    font-size: 16px;
-    font-weight: 500;
-    padding: 10px 16px;
-    transition: all 0.3s ease;
+  color: #D1C6A1 !important;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 10px 16px;
+  transition: all 0.3s ease;
 }
 
 /* Active Tab */
 ::ng-deep .mat-mdc-tab.mdc-tab--active .mdc-tab__text-label {
-    color: #ECDFCC !important;
-    font-weight: bold;
-    border-bottom: 3px solid #ECDFCC;
+  color: #ECDFCC !important;
+  font-weight: bold;
+  border-bottom: 3px solid #ECDFCC;
 }
 
 /* Hover Effect */
 ::ng-deep .mat-mdc-tab:hover .mdc-tab__text-label {
-    color: #ECDFCC !important;
+  color: #ECDFCC !important;
 }
 
 /* Mat Ink Bar (Active Tab Underline) */
 ::ng-deep .mat-mdc-tab .mat-mdc-tab-indicator {
-    background-color: #ECDFCC !important;
+  background-color: #ECDFCC !important;
 }
 
 /* Tab Content */
 ::ng-deep .mat-mdc-tab-body {
-    background-color: #697565;
-    padding: 20px;
-    border-bottom-left-radius: 12px; /* Rounds bottom corners */
-    border-bottom-right-radius: 12px;
-    overflow: hidden;
+  background-color: #697565;
+  padding: 20px;
+  border-bottom-left-radius: 12px; /* Rounds bottom corners */
+  border-bottom-right-radius: 12px;
+  overflow: hidden;
 }
 
 /* Adjust content inside tabs */
 ::ng-deep .mat-mdc-tab-body-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 250px;
 }
 
 /* Custom Insert Button */
 .custom-insert-button {
-    background-color: #4CAF50; /* Green color for insert button */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px; /* Space between icon and text */
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .custom-insert-button:hover {
-    background-color: #45a049; /* Darker green on hover */
-  }
-  
-  .custom-insert-button mat-icon {
-    font-size: 20px; /* Adjust icon size */
-  }
-  
-  /* File Input Button (Hidden) */
-  .input_fileupload--hidden {
-    display: none; /* Hide the file input */
-  }
-  
-  /* Image Preview Section */
-  .image-preview {
-    margin-top: 10px;
-    text-align: center;
-  }
-  
-  .preview-image {
-    max-width: 100%;
-    max-height: 200px;
-    border-radius: 5px;
-  }
-  
-  /* Image Actions (Delete and Confirm Buttons) */
-  .image-actions {
-    display: flex;
-    justify-content: center;
-    gap: 10px; /* Space between buttons */
-    margin-top: 10px;
-  }
-  
-  .delete-button {
-    background-color: #ff4444; /* Red color for delete button */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    padding: 5px 10px;
-    display: flex;
-    align-items: center;
-  }
-  
-  .delete-button:hover {
-    background-color: #cc0000; /* Darker red on hover */
-  }
-  
-  .confirm-button {
-    background-color: #3f51b5; /* Blue color for confirm button */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    padding: 5px 10px;
-  }
-  
-  .confirm-button:hover {
-    background-color: #303f9f; /* Darker blue on hover */
-  }
+  background-color: #4CAF50; /* Green color for insert button */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Space between icon and text */
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.custom-insert-button:hover {
+  background-color: #45a049; /* Darker green on hover */
+}
+
+.custom-insert-button mat-icon {
+  font-size: 20px; /* Adjust icon size */
+}
+
+/* File Input Button (Hidden) */
+.input_fileupload--hidden {
+  display: none; /* Hide the file input */
+}
+
+/* Image Preview Section */
+.image-preview {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.preview-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 5px;
+}
+
+/* Image Actions (Delete and Confirm Buttons) */
+.image-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* Space between buttons */
+  margin-top: 10px;
+}
+
+.delete-button {
+  background-color: #ff4444; /* Red color for delete button */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+}
+
+.delete-button:hover {
+  background-color: #cc0000; /* Darker red on hover */
+}
+
+.confirm-button {
+  background-color: #3f51b5; /* Blue color for confirm button */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 5px 10px;
+}
+
+.confirm-button:hover {
+  background-color: #303f9f; /* Darker blue on hover */
+}
 
 /* ============================= */
 /* Responsive Adjustments */
 /* ============================= */
 @media (max-width: 600px) {
-    mat-tab-group {
-        max-width: 100%;
-    }
-    .mdc-tab__text-label {
-        font-size: 14px;
-        padding: 8px;
-    }
+  mat-tab-group {
+    max-width: 100%;
+  }
+  .mdc-tab__text-label {
+    font-size: 14px;
+    padding: 8px;
+  }
 }

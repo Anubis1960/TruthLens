@@ -88,7 +88,7 @@ def verify_video(file):
 
         verdict = predict_text(title, ts)
 
-        if pred[0] > 0.7:
+        if pred[0] > 0.5:
             pred = 'AI Generated'
         else:
             pred = 'Real'
