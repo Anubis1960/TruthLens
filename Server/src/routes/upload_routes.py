@@ -21,3 +21,17 @@ def upload_file():
         return res, HTTPStatus.OK
 
     return {'message': 'Files uploaded successfully!'}, HTTPStatus.OK
+
+@upload_bp.route('/video', methods=['POST'])
+def upload_video():
+    if 'video' not in request.files:
+        return {'error': 'No file send!'}, HTTPStatus.BAD_REQUEST
+
+    file = request.files['video']
+
+    res = verify_video(file)
+
+    if 'error' in res:
+        return res, HTTPStatus.BAD_REQUEST
+
+    return res, HTTPStatus.OK
