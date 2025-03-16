@@ -13,6 +13,11 @@ USERS_COLLECTION = "users"
 #
 def create_user(data: User) -> dict:
 	try:
+		users=list(db.collection(USERS_COLLECTION)
+					.where('email', '==', data.email)
+					.stream())
+		if len(users) > 0:
+			return {"error": "Email already in use"}
 		data.password = encrypt(data.password)
 		_,user_ref = db.collection(USERS_COLLECTION).add(data.to_dict())
 		return UserDTO(user_ref.id, data.email, data.password).to_dict()

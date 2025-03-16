@@ -28,7 +28,6 @@ import { ChatbotComponent } from './components/chatbot/chatbot.component';
 import { RegisterComponent } from './components/register/register.component';
 import { NewsComponent } from './components/news/news.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,

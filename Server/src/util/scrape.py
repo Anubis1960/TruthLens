@@ -10,6 +10,7 @@ import cv2
 import numpy as np
 import yt_dlp
 from dotenv import load_dotenv
+from src.util.img.img_detect import predict_image
 
 # load .env file
 load_dotenv()
@@ -61,7 +62,7 @@ def fetch_image(url: str) -> np.ndarray | None:
 
     return image
 
-def fetch_video_from_streaming_service(url: str, output_path: str):
+def fetch_video_from_streaming_service(url: str, output_path: str) -> str:
     """
     Downloads a video from a streaming service using yt-dlp.
 
@@ -71,16 +72,19 @@ def fetch_video_from_streaming_service(url: str, output_path: str):
 
 
     ydl_opts = {
-        'outtmpl': f'{output_path}/{os.urandom(8).hex()}.mp4',  # Output file path
+        'outtmpl': f'{output_path}.mp4',  # Output file path
         'format': 'best',  # Choose the best quality format
     }
 
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            ydl.download([url])
+            info_dict = ydl.extract_info(url, download=True)
+            print(info_dict)
         print(f"Video successfully saved to {output_path}")
+        return info_dict['title']
     except Exception as e:
         print(f"Error downloading video: {e}")
+        return ""
 
 def get_total_frames(video_path: str) -> int:
     """
@@ -137,6 +141,32 @@ def extract_frames(video_path: str, frames: np.ndarray, output_path: str):
     # Release the video capture object
     cap.release()
 
+def analyze_frames(video_path: str, frames: np.ndarray) -> list:
+    cap = cv2.VideoCapture(video_path)
+
+    if not cap.isOpened():
+        raise ValueError(f"Could not open video file: {video_path}")
+
+    sum = 0
+    for frame_number in frames:
+        # Set the frame position
+        cap.set(cv2.CAP_PROP_POS_FRAMES, frame_number)
+
+        # Read the frame
+        ret, frame = cap.read()
+
+        if not ret:
+            print(f"Error reading frame {frame_number}")
+            continue
+
+        sum += predict_image(frame)
+
+
+    # Release the video capture object
+    cap.release()
+
+    return sum/len(frames)
+
 def transcript(url: str) -> str:
     transcriber = aai.Transcriber()
 
@@ -144,6 +174,7 @@ def transcript(url: str) -> str:
 
     if transcript.status == aai.TranscriptStatus.error:
         print(transcript.error)
+        return ""
     else:
         print(transcript.text)
         return transcript.text
@@ -160,13 +191,15 @@ def main():
     # print(extract_video(soup, 'src'))
     # print(extract_title(soup))
     # print(extract_selector(soup, 'p'))
-    # total_frames = get_total_frames("video.mp4")
     # print(f"Total frames: {total_frames}")
     #get 5 frames from the video between 0 and total_frames
-    # frames = np.random.randint(0, total_frames, 5)
     # extract_frames("video.mp4", frames, "frame")
     # fetch_video_from_streaming_service("https://www.youtube.com/shorts/3fQ3nAjT4e8", "../temp")
-    text = transcript("/home/catalin/workspace/ITFest2025/Server/src/temp/d9fa31753f0e6db7.mp4")
+    # text = transcript("/home/catalin/workspace/ITFest2025/Server/src/temp/d9fa31753f0e6db7.mp4")
+    # pred = analyze_frames("temp.mp4", frames)
+    # print(pred)
+    img = cv2.imread('/home/anubis/Downloads/archive/test/FAKE/0.jpg')
+    print(predict_image(img))
 
 
 if __name__ == '__main__':

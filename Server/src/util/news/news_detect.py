@@ -56,22 +56,16 @@ def preprocess_text(text):
         print(f"Error processing text: {e}")
         return ""
 
-def predict(title: str, text: str) -> str:
-    # Preprocess text
-    print("asd")
+def predict_text(title: str, text: str) -> str:
     title = preprocess_text(title)
     text = preprocess_text(text)
     tokenizer = pickle.load( open( "src/util/news/tokenizer.pickle", "rb" ) )
 
     # Combine title and text
     content = "<title>" + title + "</title> <content>" + text + "</content>"
-    print(content[0])
     seq = tokenizer.texts_to_sequences([content])
-    print(seq)
     pad = pad_sequences(seq, maxlen=MAXLEN, padding='post')
-    print(pad)
     pred = rf.predict(pad)
-    print(pred)
     print(list(NEWS_CLASS_MAPPING.keys())[list(NEWS_CLASS_MAPPING.values()).index(pred)])
     return list(NEWS_CLASS_MAPPING.keys())[list(NEWS_CLASS_MAPPING.values()).index(pred)]
 
@@ -118,7 +112,7 @@ def main():
     What Can You Do?  
     
     If you suspect the QLI exists, tread carefully. Avoid sharing sensitive information online, use encrypted communication tools, and educate yourself about digital privacy. Most importantly, question everything—even this very message. After all, how do you know I’m  not part of the QLI? """
-    predict(title, text)
+    predict_text(title, text)
 
 
 if __name__ == "__main__":
