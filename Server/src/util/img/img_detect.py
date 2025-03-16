@@ -8,7 +8,7 @@ def load_modell():
     # Get the directory of the current script
     script_dir = os.path.dirname(os.path.abspath(__file__))
     # Construct the absolute path to the model file
-    model_path = os.path.join(script_dir, "ai_gen_detector.keras")
+    model_path = os.path.join(script_dir, "deepfake_model32_rebrand.keras")
     model = tf.keras.models.load_model(model_path)
     return model
 
