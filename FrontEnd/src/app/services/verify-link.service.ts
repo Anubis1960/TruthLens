@@ -13,14 +13,20 @@ export class VerifyLinkService {
   constructor(private http: HttpClient) { }
 
   verifySite(link: string):Observable<any>{
-    return this.http.post<any>(`${BASE_URL}/site`, {link});
+    console.log(link);
+    return this.http.post<any>(`${BASE_URL}/api/sites/article-link`, {link});
   }
+
   verifyImage(link:string){
-    return this.http.post<any>(`${BASE_URL}/image`, {link});
+    console.log(link);
+    return this.http.post<any>(`${BASE_URL}/api/sites/image-url`, {link});
   }
+
   verifyVideo(link:string){
-    return this.http.post<any>(`${BASE_URL}/video`, {link});
+    console.log(link);
+    return this.http.post<any>(`${BASE_URL}/api/video-url`, {link});
   }
+
   uploadFile(formData: FormData): Observable<any> {
     return this.http.post<any>(`${BASE_URL}/api/upload/image`, formData);
   }

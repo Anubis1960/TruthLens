@@ -9,20 +9,21 @@ import { VerifyLinkService } from '../../services/verify-link.service';
   styleUrl: './verify-link.component.css'
 })
 export class VerifyLinkComponent {
-accept: any;
-deleteButtonLabel: any;
-event: any;
+  accept: any;
+  deleteButtonLabel: any;
+  event: any;
 
-  value = '';
+  articleLink = '';
   selected_type: string = '';
-@ViewChild('fileUpload')
+  @ViewChild('fileUpload')
   fileUpload: ElementRef | undefined;
   inputFileName: string | undefined;
-@Input()
-files: File[] = []
-videoFile: File | null = null;
-videoUrl: string | null = null;
-  constructor(private sanitizer: DomSanitizer, private http: HttpClient, private service: VerifyLinkService){}
+  @Input()
+  files: File[] = []
+  videoFile: File | null = null;
+  videoUrl: string | null = null;
+  
+  constructor(private sanitizer: DomSanitizer, private http: HttpClient, private linkService: VerifyLinkService){}
 
   onClick(event: Event) {
     if (this.fileUpload)
@@ -35,20 +36,31 @@ videoUrl: string | null = null;
   onFileSelected(event: any) {
       this.files = event.target.files
   }
+
   onUpload(): void{
     const fd = new FormData()
+    
     if (this.files.length === 0) {
       return
     }
+    
     for (const file of this.files) {
       console.log(`Adăugat fișier: ${file.name}`); 
       fd.append('files', file)
     }
-    this.service.uploadFile(fd).subscribe((response) => {
-      console.log(response)
-    })
+
+    this.linkService.uploadFile(fd).subscribe(
+      (response: any) => {
+        console.log(response);
+      },
+
+      (error: any) => {
+        console.error(error);
+      }
+    )
 
   }
+
   onVideoSelected(event: any) {
     if (event.target.files.length > 0) {
       this.videoFile = event.target.files[0];
@@ -104,25 +116,40 @@ videoUrl: string | null = null;
 
   isMultiple(): boolean {
       return true; 
-    }
-  onConfirm():void{
+  }
+
+  onConfirm(link: string):void{
+    console.log(link)
     console.log(this.selected_type);
+    
     if(this.selected_type == 'one'){
-      this.verify_site_link();
-    }else if(this.selected_type == 'two'){
-      this.verify_image_link();
-    }else if(this.selected_type == 'three'){
-      this.verify_video_link();
+      this.verify_site_link(link);
+
+    } else if(this.selected_type == 'two'){
+      this.verify_image_link(link);
+    
+    } else if(this.selected_type == 'three'){
+      this.verify_video_link(link);
     }
   }
 
-  verify_site_link():void{
+  verify_site_link(link: string):void{
     console.log("In verify_site_link function...");
+    this.linkService.verifySite(link).subscribe({
+      next: (response: any) => {
+        console.log(response);
+      },
+      error: (error: any) => {
+        console.log(error)
+      }
+    })
   }
-  verify_image_link():void{
+
+  verify_image_link(link: string):void{
     console.log("In verify_image_link function...");
   }
-  verify_video_link():void{
+
+  verify_video_link(link: string):void{
     console.log("In verify_video_link function...");
   }
 

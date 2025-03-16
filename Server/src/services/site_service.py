@@ -9,6 +9,7 @@ from ..util.scrape import *
 from ..util.news.news_detect import *
 from ..util.database import db
 from ..util.news.news_detect import NEWS_CLASS_MAPPING
+from ..util.img.img_detect import predict_image
 
 #
 #	Path for sites
@@ -33,7 +34,6 @@ def validate_link(url: str) -> dict:
 
 		# Search domain in db
 		domain_ref = db.collection(SITES_COLLECTION).document(domain).get()
-		print(domain_ref)
 
 		# Check domain existence
 		if domain_ref.exists:
@@ -42,7 +42,7 @@ def validate_link(url: str) -> dict:
 
 			# check for duplicate link
 			if url in articles:
-				return {"error": "Duplicate link."}
+				return {"verdict": predicted_text}
 
 			stats = site_data.get('stats', {key: 0 for key in NEWS_CLASS_MAPPING.keys()})
 
@@ -65,7 +65,7 @@ def validate_link(url: str) -> dict:
 		db.collection(SITES_COLLECTION).document(domain).set(site_data)
 
 		# Return result as a dictionary
-		return SiteDTO(domain, site_data['domain'], site_data['articles'], site_data['stats']).to_dict()
+		return {"verdict": predicted_text}
 
 	except Exception as e:
 		# Log the error and return an error message

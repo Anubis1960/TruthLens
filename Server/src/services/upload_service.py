@@ -1,11 +1,11 @@
 import tempfile
 
 import numpy as np
-from src.util.img.img_detect import predict_image
 import cv2
 from io import BytesIO
 from pydub import AudioSegment
 import assemblyai as aai
+from ..util.img.img_detect import predict_image
 
 
 def verify_img_file(file) -> dict:
