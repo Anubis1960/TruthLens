@@ -7,6 +7,8 @@ from pydub import AudioSegment
 import assemblyai as aai
 from ..util.img.img_detect import predict_image
 
+from src.util.scrape import get_total_frames, analyze_frames
+
 
 def verify_img_file(file) -> dict:
     """
@@ -56,13 +58,21 @@ def verify_video(file):
         # Read the file bytes
         file_bytes = file.read()
 
-        # Create a file-like object in memory
-        file_like = BytesIO(file_bytes)
-
         # Write the video bytes to a temporary file
-        with tempfile.NamedTemporaryFile(suffix=f".{file_extension}", delete=False) as temp_file:
+        with tempfile.NamedTemporaryFile(suffix=f".{file_extension}", delete=True) as temp_file:
             temp_file_path = temp_file.name
             temp_file.write(file_bytes)
+
+        total_frames = get_total_frames(temp_file_path)
+        frames = np.random.randint(0, total_frames, 5)
+        print(frames)
+
+        pred = analyze_frames(temp_file_path, frames)
+        print(pred)
+
+        return {'prediction': pred}
+
+
 
     except Exception as e:
         return {'error': f'Error during transcription: {str(e)}'}
