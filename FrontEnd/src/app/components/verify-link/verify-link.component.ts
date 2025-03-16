@@ -18,6 +18,7 @@ export class VerifyLinkComponent {
   files: File[] = []; // To store the selected file(s)
   videoFile: File | null = null;
   videoUrl: string | null = null;
+  isUploading: boolean = false; 
 
   @ViewChild('fileUpload') fileUpload!: ElementRef;
 
@@ -49,18 +50,23 @@ export class VerifyLinkComponent {
     if (this.files.length === 0) {
       return;
     }
-
+  
+    this.isUploading = true; // Set loading state to true
+  
     const formData = new FormData();
     formData.append('files', this.files[0]);
-
+  
     this.linkService.uploadFile(formData).subscribe({
       next: (response: any) => {
         console.log('Upload successful!', response);
-        this.openDialog('Image uploaded successfully!');
+        this.openDialog('Image result: ' + response['prediction']);
+        this.clearImage(); // Clear the image after successful upload
+        this.isUploading = false; // Reset loading state
       },
       error: (error: any) => {
         console.error('Upload failed!', error);
         this.openDialog('Upload failed: ' + error.message);
+        this.isUploading = false; // Reset loading state
       }
     });
   }
@@ -75,8 +81,9 @@ export class VerifyLinkComponent {
   }
 
   // Clear the article link input
-  clearArticleLink(): void {
+  clearData(): void {
     this.articleLink = '';
+    this.selected_type = '';
   }
 
   // Handle video file selection
@@ -118,8 +125,10 @@ export class VerifyLinkComponent {
   onConfirm(link: string): void {
     if (this.selected_type === 'article') {
       this.verify_site_link(link);
+  
     } else if (this.selected_type === 'image') {
       this.verify_image_link(link);
+
     } else if (this.selected_type === 'video') {
       this.verify_video_link(link);
     }
@@ -130,6 +139,7 @@ export class VerifyLinkComponent {
     this.linkService.verifySite(link).subscribe({
       next: (response: any) => {
         this.openDialog('Article result: ' + response['verdict']);
+        this.clearData();
       },
       error: (error: any) => {
         console.error(error);
@@ -143,6 +153,7 @@ export class VerifyLinkComponent {
     this.linkService.verifyImage(link).subscribe({
       next: (response: any) => {
         this.openDialog('Image result: ' + response['prediction']);
+        this.clearData();
       },
       error: (error: any) => {
         console.error(error);
@@ -156,6 +167,7 @@ export class VerifyLinkComponent {
     this.linkService.verifyVideo(link).subscribe({
       next: (response: any) => {
         this.openDialog('Provided video is ' + response['video'] + ' with ' + response['audio'] + ' criteria.');
+        this.clearData();
       },
       error: (error: any) => {
         console.error(error);
