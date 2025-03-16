@@ -33,6 +33,7 @@ export class VerifyLinkComponent {
   onInput(event: Event) {
 
   }
+  
   onFileSelected(event: any) {
       this.files = event.target.files
   }
@@ -99,8 +100,8 @@ export class VerifyLinkComponent {
       if (f.name === file.name
         && f.lastModified === file.lastModified
         && f.size === f.size
-        && f.type === f.type
-      ) {
+        && f.type === f.type) 
+      {
         return false
       }
     }
@@ -113,28 +114,23 @@ export class VerifyLinkComponent {
     }
   }
 
-
   isMultiple(): boolean {
       return true; 
   }
 
   onConfirm(link: string):void{
-    console.log(link)
-    console.log(this.selected_type);
-    
-    if(this.selected_type == 'one'){
+    if(this.selected_type == 'article'){
       this.verify_site_link(link);
 
-    } else if(this.selected_type == 'two'){
+    } else if(this.selected_type == 'image'){
       this.verify_image_link(link);
     
-    } else if(this.selected_type == 'three'){
+    } else if(this.selected_type == 'video'){
       this.verify_video_link(link);
     }
   }
 
-  verify_site_link(link: string):void{
-    console.log("In verify_site_link function...");
+  verify_site_link(link: string):void {
     this.linkService.verifySite(link).subscribe({
       next: (response: any) => {
         console.log(response);
@@ -145,12 +141,28 @@ export class VerifyLinkComponent {
     })
   }
 
-  verify_image_link(link: string):void{
-    console.log("In verify_image_link function...");
+  verify_image_link(link: string):void {
+    this.linkService.verifyImage(link).subscribe({
+      next: (response: any) => {
+        console.log(response);
+      },
+
+      error: (error: any) => {
+        console.error(error)
+      }
+    })
   }
 
-  verify_video_link(link: string):void{
-    console.log("In verify_video_link function...");
+  verify_video_link(link: string):void {
+    this.linkService.verifyVideo(link).subscribe({
+      next: (response: any) => {
+        console.log(response);
+      },
+
+      error: (error: any) => {
+        console.error(error);
+      }
+    })
   }
 
 }

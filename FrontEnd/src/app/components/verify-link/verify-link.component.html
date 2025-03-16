@@ -15,9 +15,9 @@
         <mat-form-field class="form-field">
           <mat-label>Type</mat-label>
           <mat-select [(ngModel)]="selected_type">
-            <mat-option value="one">Site</mat-option>
-            <mat-option value="two">Image</mat-option>
-            <mat-option value="three">Video</mat-option>
+            <mat-option value="article">Site</mat-option>
+            <mat-option value="image">Image</mat-option>
+            <mat-option value="video">Video</mat-option>
           </mat-select>
         </mat-form-field>
         <button class="confirm-button" (click)="onConfirm(articleLink)">Confirm</button>
