@@ -10,7 +10,15 @@ mat-toolbar {
     width: 100%;
     z-index: 2;
     background-color: #3C3D37;
+
 }
+
+mat-toolbar img {
+    height: 40px;
+    width: auto;
+    margin-left: 10px;
+  }
+
 mat-toolbar mat-icon{
     color: #ECDFCC;
 }
