@@ -44,7 +44,13 @@
         <button class="confirm-button" (click)="onUpload()">Confirm</button>
       </div>
     </mat-tab>
-    <mat-tab label="Video"> Content 3 </mat-tab>
+    <mat-tab label="Video">
+      <div>
+        <input type="file" (change)="onVideoSelected($event)" accept="video/*">
+        <button mat-raised-button color="primary" (click)="onUploadVideo()">Upload Video</button>
+      </div>
+    </mat-tab>
+    
   </mat-tab-group>
     
   </div>

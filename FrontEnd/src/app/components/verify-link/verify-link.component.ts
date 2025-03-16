@@ -20,7 +20,8 @@ event: any;
   inputFileName: string | undefined;
 @Input()
 files: File[] = []
-
+videoFile: File | null = null;
+videoUrl: string | null = null;
   constructor(private sanitizer: DomSanitizer, private http: HttpClient, private service: VerifyLinkService){}
 
   onClick(event: Event) {
@@ -47,6 +48,30 @@ files: File[] = []
       console.log(response)
     })
 
+  }
+  onVideoSelected(event: any) {
+    if (event.target.files.length > 0) {
+      this.videoFile = event.target.files[0];
+    }
+  }
+
+  onUploadVideo() {
+    if (!this.videoFile) {
+      console.error('Niciun fișier video selectat!');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('video', this.videoFile);
+
+    this.http.post('http://localhost:5000/api/upload/video', formData).subscribe({
+      next: (response) => {
+        console.log('Upload reușit!', response);
+      },
+      error: (err) => {
+        console.error('Eroare la upload!', err);
+      }
+    });
   }
 
   removeFile(event:Event, file: any) {
