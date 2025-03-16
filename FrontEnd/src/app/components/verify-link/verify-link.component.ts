@@ -2,6 +2,8 @@ import { Component, ElementRef, Input, input, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { HttpClient} from '@angular/common/http';
 import { VerifyLinkService } from '../../services/verify-link.service';
+import { DialogComponent } from '../dialog/dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-verify-link',
   standalone: false,
@@ -12,7 +14,6 @@ export class VerifyLinkComponent {
   accept: any;
   deleteButtonLabel: any;
   event: any;
-
   articleLink = '';
   selected_type: string = '';
   @ViewChild('fileUpload')
@@ -22,8 +23,7 @@ export class VerifyLinkComponent {
   files: File[] = []
   videoFile: File | null = null;
   videoUrl: string | null = null;
-  
-  constructor(private sanitizer: DomSanitizer, private http: HttpClient, private linkService: VerifyLinkService){}
+  constructor(private sanitizer: DomSanitizer, private http: HttpClient, private linkService: VerifyLinkService, private dialog: MatDialog){}
 
   onClick(event: Event) {
     if (this.fileUpload)
@@ -33,6 +33,7 @@ export class VerifyLinkComponent {
   onInput(event: Event) {
 
   }
+  
   onFileSelected(event: any) {
       this.files = event.target.files
   }
@@ -93,14 +94,16 @@ export class VerifyLinkComponent {
       this.clearInputElement()
     }
   }
-
+  clearArticleLink(): void {
+    this.articleLink = '';
+  }
   validate(file: File) {
     for (const f of this.files) {
       if (f.name === file.name
         && f.lastModified === file.lastModified
         && f.size === f.size
-        && f.type === f.type
-      ) {
+        && f.type === f.type) 
+      {
         return false
       }
     }
@@ -113,44 +116,66 @@ export class VerifyLinkComponent {
     }
   }
 
-
   isMultiple(): boolean {
       return true; 
   }
 
   onConfirm(link: string):void{
-    console.log(link)
-    console.log(this.selected_type);
-    
-    if(this.selected_type == 'one'){
+    if(this.selected_type == 'article'){
       this.verify_site_link(link);
 
-    } else if(this.selected_type == 'two'){
+    } else if(this.selected_type == 'image'){
       this.verify_image_link(link);
     
-    } else if(this.selected_type == 'three'){
+    } else if(this.selected_type == 'video'){
       this.verify_video_link(link);
     }
   }
 
-  verify_site_link(link: string):void{
-    console.log("In verify_site_link function...");
+  verify_site_link(link: string):void {
     this.linkService.verifySite(link).subscribe({
       next: (response: any) => {
-        console.log(response);
+        this.openDialog("The site is verified: " + response.message);      
       },
       error: (error: any) => {
-        console.log(error)
+        console.log(error);
+        this.openDialog("Verification failed: " + error.message);
       }
     })
   }
 
-  verify_image_link(link: string):void{
-    console.log("In verify_image_link function...");
+  openDialog(message: string): void {
+    console.log("Open dialog ba");
+    this.dialog.open(DialogComponent, {
+      data: { message },
+      width: '400px'
+    });
   }
 
-  verify_video_link(link: string):void{
-    console.log("In verify_video_link function...");
+  verify_image_link(link: string):void {
+    this.linkService.verifyImage(link).subscribe({
+      next: (response: any) => {
+        this.openDialog("The image is verified: " + response.message);      
+      },
+      error: (error: any) => {
+        console.error(error);
+        this.openDialog("Verification failed: " + error.message);
+      }
+    })
+  }
+
+  verify_video_link(link: string):void {
+    this.linkService.verifyVideo(link).subscribe({
+      next: (response: any) => {
+        console.log(response);
+        this.openDialog("The video is verified: " + response.message);      
+      },
+
+      error: (error: any) => {
+        console.error(error);
+        this.openDialog("Verification failed: " + error.message);
+      }
+    })
   }
 
 }

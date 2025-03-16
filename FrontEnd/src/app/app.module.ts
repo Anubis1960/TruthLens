@@ -28,6 +28,8 @@ import { ChatbotComponent } from './components/chatbot/chatbot.component';
 import { RegisterComponent } from './components/register/register.component';
 import { CallbackComponent } from './components/callback/callback.component';
 import { NewsComponent } from './components/news/news.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DialogComponent } from './components/dialog/dialog.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,8 @@ import { NewsComponent } from './components/news/news.component';
     ChatbotComponent,
     RegisterComponent,
     CallbackComponent,
-    NewsComponent
+    NewsComponent,
+    DialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -63,6 +66,7 @@ import { NewsComponent } from './components/news/news.component';
     MatTabGroup,
     MatTableModule,
     MatSortModule,
+    MatDialogModule,
 
   ],
   providers: [
