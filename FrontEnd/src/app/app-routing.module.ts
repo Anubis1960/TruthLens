@@ -16,7 +16,6 @@ const routes: Routes = [
   { path: 'domain', component: DomainTableComponent, /*canActivate: [canActivate] */},
   { path: 'home', component: HomeComponent, /*canActivate: [canActivate]*/ },
   { path: 'verify', component: VerifyLinkComponent, /*canActivate: [canActivate]*/ },
-
 ];
 
 @NgModule({
