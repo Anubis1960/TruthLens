@@ -94,6 +94,7 @@ export class VerifyLinkComponent {
       this.clearInputElement()
     }
   }
+
   clearArticleLink(): void {
     this.articleLink = '';
   }
@@ -132,30 +133,29 @@ export class VerifyLinkComponent {
     }
   }
 
-  verify_site_link(link: string):void {
-    this.linkService.verifySite(link).subscribe({
-      next: (response: any) => {
-        this.openDialog("The site is verified: " + response.message);      
-      },
-      error: (error: any) => {
-        console.log(error);
-        this.openDialog("Verification failed: " + error.message);
-      }
-    })
-  }
-
   openDialog(message: string): void {
-    console.log("Open dialog ba");
     this.dialog.open(DialogComponent, {
       data: { message },
       width: '400px'
     });
   }
 
+  verify_site_link(link: string):void {
+    this.linkService.verifySite(link).subscribe({
+      next: (response: any) => {
+        this.openDialog("Article result: " + response['verdict']);      
+      },
+      error: (error: any) => {
+        console.log(error);
+        this.openDialog("Verification failed: " + error);
+      }
+    })
+  }
+
   verify_image_link(link: string):void {
     this.linkService.verifyImage(link).subscribe({
       next: (response: any) => {
-        this.openDialog("The image is verified: " + response.message);      
+        this.openDialog("Image result: " + response['prediction']);      
       },
       error: (error: any) => {
         console.error(error);
@@ -167,8 +167,7 @@ export class VerifyLinkComponent {
   verify_video_link(link: string):void {
     this.linkService.verifyVideo(link).subscribe({
       next: (response: any) => {
-        console.log(response);
-        this.openDialog("The video is verified: " + response.message);      
+        this.openDialog("Provided video is " + response['video'] + " with " + response['audio'] + " criteria.");      
       },
 
       error: (error: any) => {
