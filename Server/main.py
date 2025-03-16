@@ -6,8 +6,9 @@ from dotenv import load_dotenv
 
 from src.util.extensions import socketio
 from src.routes.user_routes import *
-#from src.routes.site_routes import *
+from src.routes.site_routes import *
 from src.routes.auth_routes import *
+from src.model.oauthmanager import OAuthManager
 from src.routes.upload_routes import *
 # import project source folder
 import sys
@@ -25,11 +26,14 @@ app.secret_key = os.getenv('SECRET_KEY')
 
 socketio.init_app(app)
 
+# OAuth Manager Setup
+oauth_manager = OAuthManager(app)
+app.config['oauth_manager'] = oauth_manager
 #
 #	Blueprints
 #
 app.register_blueprint(user_bp)
-#app.register_blueprint(site_bp)
+app.register_blueprint(site_bp)
 app.register_blueprint(auth_bp)
 app.register_blueprint(upload_bp)
 
