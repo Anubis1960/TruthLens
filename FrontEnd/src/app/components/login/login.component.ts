@@ -34,6 +34,7 @@ export class LoginComponent {
       }
     })
   }
+  
   loginWithGoogle():void{
     console.log("Google Auth selected...");
     window.location.href = 'http://localhost:5000/login';

@@ -3,21 +3,31 @@ from ..dto.user_dto import UserDTO
 from ..util.database import db
 from ..util.encrypt import encrypt
 from google.cloud.firestore_v1.base_query import FieldFilter
+
 #
 #	Path for users
 #
 USERS_COLLECTION = "users"
 
 #
-#	CRUD operations
+#	DB Fetch
 #
-def create_user(data: User) -> dict:
+def get_user_by_email(email: str) -> dict:
 	try:
-		data.password = encrypt(data.password)
-		_,user_ref = db.collection(USERS_COLLECTION).add(data.to_dict())
-		return UserDTO(user_ref.id, data.email, data.password).to_dict()
+		# DB Fetch
+		users_ref = db.collection(USERS_COLLECTION)
+		query = users_ref.where(filter=FieldFilter('email', '==', email))
+		docs = query.get()
+
+		if not docs:
+			return {"error": "No user found with the provided email"}
+
+		# Assuming email is unique, return the first document
+		user = docs[0].to_dict()
+		return user
 
 	except Exception as e:
+		# Log the error for debugging
 		return {"error": str(e)}
 
 def get_user_by_email_and_password(email: str, password: str) -> dict:
@@ -36,5 +46,27 @@ def get_user_by_email_and_password(email: str, password: str) -> dict:
 		return user_dto.to_dict()
 	except Exception as e:
 		return {"error" : str(e)}
-		
-		
+
+def available_email(email: str) -> bool:
+	print(email)
+	# Fetch data from db
+	users_ref = list(db.collection(USERS_COLLECTION).where(filter=FieldFilter('email', '==', email)).stream())
+
+	# Check existence
+	if len(users_ref) > 0:
+		return False
+
+	return True
+
+
+#
+#	CRUD operations
+#
+def create_user(data: User) -> dict:
+	try:
+		data.password = encrypt(data.password)
+		_,user_ref = db.collection(USERS_COLLECTION).add(data.to_dict())
+		return UserDTO(user_ref.id, data.email, data.password).to_dict()
+
+	except Exception as e:
+		return {"error": str(e)}

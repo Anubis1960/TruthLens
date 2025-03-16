@@ -1,4 +1,12 @@
+import os
 from authlib.integrations.flask_client import OAuth
+from dotenv import load_dotenv
+from tensorflow.dtensor.python.config import client_id
+
+# load .env file
+load_dotenv()
+GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_API_OAUTH')
+GOOGLE_CLIENT_SECRET = os.getenv('GOOGLE_SECRET')
 
 #######################
 #
@@ -32,19 +40,19 @@ class OAuthManager:
             app (Flask): A Flask app instance to configure OAuth.
         """
         self.oauth.init_app(app)
-        # self.oauth.register(
-        #     name='google',
-        #     client_id='860148270648-qpgt1p8lr8fbali6svnsgifooj7eddac.apps.googleusercontent.com',
-        #     client_secret='',
-        #     access_token_url='https://accounts.google.com/o/oauth2/token',
-        #     access_token_params=None,
-        #     authorize_url='https://accounts.google.com/o/oauth2/auth',
-        #     authorize_params=None,
-        #     api_base_url='https://www.googleapis.com/oauth2/v1/',
-        #     userinfo_endpoint='https://openidconnect.googleapis.com/v1/userinfo',
-        #     client_kwargs={'scope': 'email profile'},
-        #     server_metadata_url='https://accounts.google.com/.well-known/openid-configuration'
-        # )
+        self.oauth.register(
+            name='google',
+            client_id=GOOGLE_CLIENT_ID,
+            client_secret=GOOGLE_CLIENT_SECRET,
+            access_token_url='https://accounts.google.com/o/oauth2/token',
+            access_token_params=None,
+            authorize_url='https://accounts.google.com/o/oauth2/auth',
+            authorize_params=None,
+            api_base_url='https://www.googleapis.com/oauth2/v1/',
+            userinfo_endpoint='https://openidconnect.googleapis.com/v1/userinfo',
+            client_kwargs={'scope': 'email profile'},
+            server_metadata_url='https://accounts.google.com/.well-known/openid-configuration'
+        )
 
     def get_provider(self, name):
         """

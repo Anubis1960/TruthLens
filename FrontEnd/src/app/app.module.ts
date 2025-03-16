@@ -22,6 +22,7 @@ import { DomainTableComponent } from './components/domain-table/domain-table.com
 import { MatTableModule} from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { RegisterComponent } from './components/register/register.component';
+import { CallbackComponent } from './components/callback/callback.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { RegisterComponent } from './components/register/register.component';
     VerifyLinkComponent,
     DomainTableComponent,
     RegisterComponent,
+    CallbackComponent,
   ],
   imports: [
     BrowserModule,

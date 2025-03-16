@@ -8,6 +8,7 @@ from src.util.extensions import socketio
 from src.routes.user_routes import *
 from src.routes.site_routes import *
 from src.routes.auth_routes import *
+from src.model.oauthmanager import OAuthManager
 # import project source folder
 import sys
 sys.path.append("src")
@@ -24,6 +25,9 @@ app.secret_key = os.getenv('SECRET_KEY')
 
 socketio.init_app(app)
 
+# OAuth Manager Setup
+oauth_manager = OAuthManager(app)
+app.config['oauth_manager'] = oauth_manager
 #
 #	Blueprints
 #
