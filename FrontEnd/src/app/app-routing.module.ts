@@ -5,6 +5,7 @@ import { HomeComponent } from './components/home/home.component';
 import { DomainTableComponent } from './components/domain-table/domain-table.component';
 import { canActivate } from './guard/auth.guard';
 import { RegisterComponent } from './components/register/register.component';
+import { VerifyLinkComponent } from './components/verify-link/verify-link.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -12,6 +13,8 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent}, 
   { path: 'domain', component: DomainTableComponent, /*canActivate: [canActivate] */},
   { path: 'home', component: HomeComponent, /*canActivate: [canActivate]*/ },
+  { path: 'verify', component: VerifyLinkComponent, /*canActivate: [canActivate]*/ },
+
 ];
 
 @NgModule({
