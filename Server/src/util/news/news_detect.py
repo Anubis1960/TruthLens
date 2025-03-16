@@ -1,6 +1,6 @@
 import os
 import re
-
+import tensorflow as tf
 import nltk
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from nltk.corpus import stopwords
@@ -11,6 +11,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 rf_path = os.getenv("RR_MODEL")
+seq_path = os.getenv("SEQ_MODEL")
 
 with open(rf_path, "rb") as f:
     rf = pickle.load(f)
@@ -59,13 +60,21 @@ def preprocess_text(text):
 def predict_text(title: str, text: str) -> str:
     title = preprocess_text(title)
     text = preprocess_text(text)
-    tokenizer = pickle.load( open( "src/util/news/tokenizer.pickle", "rb" ) )
+    script_path = os.path.dirname(os.path.abspath(__file__))
+    tokenizer_path = os.path.join(script_path, "tokenizer.pickle")
+    tokenizer = pickle.load( open(tokenizer_path, "rb"))
 
     # Combine title and text
     content = "<title>" + title + "</title> <content>" + text + "</content>"
     seq = tokenizer.texts_to_sequences([content])
     pad = pad_sequences(seq, maxlen=MAXLEN, padding='post')
     pred = rf.predict(pad)
+    seq_model = tf.keras.models.load_model(seq_path)
+    seq_pred = seq_model.predict(pad)
+    print(seq_pred)
+    max_pred = seq_pred.argmax()
+    print(max_pred)
+    print(list(NEWS_CLASS_MAPPING.keys())[list(NEWS_CLASS_MAPPING.values()).index(max_pred)])
     print(list(NEWS_CLASS_MAPPING.keys())[list(NEWS_CLASS_MAPPING.values()).index(pred)])
     return list(NEWS_CLASS_MAPPING.keys())[list(NEWS_CLASS_MAPPING.values()).index(pred)]
 

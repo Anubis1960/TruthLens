@@ -30,4 +30,5 @@ tf-keras
 faiss-cpu
 pypdf
 smolagents[openai]
-
+pydub
+authlib

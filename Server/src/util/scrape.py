@@ -11,6 +11,7 @@ import numpy as np
 import yt_dlp
 from dotenv import load_dotenv
 from src.util.img.img_detect import predict_image
+from src.util.news.news_detect import predict_text
 
 # load .env file
 load_dotenv()
@@ -180,26 +181,14 @@ def transcript(url: str) -> str:
         return transcript.text
 
 def main():
-    # url = "/home/catalin/workspace/ITFest2025/Server/src/util/video_tiktok.mp4"
-    # soup = get_soup(url)
-    # if soup is None:
-    #     print(f"Failed to fetch {url}")
-    #     return
-    # print(extract_text(soup))
-    # print(extract_links(soup, 'a'))
-    # print(extract_images(soup, 'img'))
-    # print(extract_video(soup, 'src'))
-    # print(extract_title(soup))
-    # print(extract_selector(soup, 'p'))
-    # print(f"Total frames: {total_frames}")
-    #get 5 frames from the video between 0 and total_frames
-    # extract_frames("video.mp4", frames, "frame")
-    fetch_video_from_streaming_service("https://www.youtube.com/shorts/3fQ3nAjT4e8", "../temp")
-    # text = transcript("/home/catalin/workspace/ITFest2025/Server/src/temp/d9fa31753f0e6db7.mp4")
-    # pred = analyze_frames("temp.mp4", frames)
-    # print(pred)
-    img = cv2.imread('/home/anubis/Downloads/archive/test/FAKE/0.jpg')
-    print(predict_image(img))
+    url = "https://sputnikglobe.com/20250306/china-confident-in-trade-war-advantage-over-us--1121620685.html"
+    soup = get_soup(url)
+    if soup is None:
+        print(f"Failed to fetch {url}")
+        return
+    title = extract_title(soup)
+    text = extract_text(soup)
+    predict_text(title, text)
 
 
 if __name__ == '__main__':
