@@ -211,6 +211,82 @@ mat-tab-group {
     min-height: 150px;
 }
 
+/* Custom Insert Button */
+.custom-insert-button {
+    background-color: #4CAF50; /* Green color for insert button */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Space between icon and text */
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .custom-insert-button:hover {
+    background-color: #45a049; /* Darker green on hover */
+  }
+  
+  .custom-insert-button mat-icon {
+    font-size: 20px; /* Adjust icon size */
+  }
+  
+  /* File Input Button (Hidden) */
+  .input_fileupload--hidden {
+    display: none; /* Hide the file input */
+  }
+  
+  /* Image Preview Section */
+  .image-preview {
+    margin-top: 10px;
+    text-align: center;
+  }
+  
+  .preview-image {
+    max-width: 100%;
+    max-height: 200px;
+    border-radius: 5px;
+  }
+  
+  /* Image Actions (Delete and Confirm Buttons) */
+  .image-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Space between buttons */
+    margin-top: 10px;
+  }
+  
+  .delete-button {
+    background-color: #ff4444; /* Red color for delete button */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .delete-button:hover {
+    background-color: #cc0000; /* Darker red on hover */
+  }
+  
+  .confirm-button {
+    background-color: #3f51b5; /* Blue color for confirm button */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 5px 10px;
+  }
+  
+  .confirm-button:hover {
+    background-color: #303f9f; /* Darker blue on hover */
+  }
+
 /* ============================= */
 /* Responsive Adjustments */
 /* ============================= */

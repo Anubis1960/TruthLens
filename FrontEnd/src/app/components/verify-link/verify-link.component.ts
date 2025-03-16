@@ -1,76 +1,95 @@
-import { Component, ElementRef, Input, input, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { VerifyLinkService } from '../../services/verify-link.service';
-import { DialogComponent } from '../dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../dialog/dialog.component';
+
 @Component({
   selector: 'app-verify-link',
   standalone: false,
   templateUrl: './verify-link.component.html',
-  styleUrl: './verify-link.component.css'
+  styleUrls: ['./verify-link.component.css']
 })
 export class VerifyLinkComponent {
-  accept: any;
-  deleteButtonLabel: any;
-  event: any;
   articleLink = '';
   selected_type: string = '';
-  @ViewChild('fileUpload')
-  fileUpload: ElementRef | undefined;
-  inputFileName: string | undefined;
-  @Input()
-  files: File[] = []
+  selectedImage: string | null = null; // To store the image preview URL
+  files: File[] = []; // To store the selected file(s)
   videoFile: File | null = null;
   videoUrl: string | null = null;
-  constructor(private sanitizer: DomSanitizer, private http: HttpClient, private linkService: VerifyLinkService, private dialog: MatDialog){}
 
+  @ViewChild('fileUpload') fileUpload!: ElementRef;
+
+  constructor(
+    private sanitizer: DomSanitizer,
+    private http: HttpClient,
+    private linkService: VerifyLinkService,
+    private dialog: MatDialog
+  ) {}
+
+  // Trigger file input click
   onClick(event: Event) {
-    if (this.fileUpload)
-      this.fileUpload.nativeElement.click()
+    if (this.fileUpload) {
+      this.fileUpload.nativeElement.click();
+    }
   }
 
-  onInput(event: Event) {
-
-  }
-  
+  // Handle file selection
   onFileSelected(event: any) {
-      this.files = event.target.files
+    const file = event.target.files[0];
+    if (file) {
+      this.files = [file]; // Store the selected file
+      this.selectedImage = URL.createObjectURL(file); // Create a preview URL
+    }
   }
 
-  onUpload(): void{
-    const fd = new FormData()
-    
+  // Upload the selected image
+  onUpload(): void {
     if (this.files.length === 0) {
-      return
-    }
-    
-    for (const file of this.files) {
-      console.log(`Adăugat fișier: ${file.name}`); 
-      fd.append('files', file)
+      return;
     }
 
-    this.linkService.uploadFile(fd).subscribe(
-      (response: any) => {
-        console.log(response);
+    const formData = new FormData();
+    formData.append('files', this.files[0]);
+
+    this.linkService.uploadFile(formData).subscribe({
+      next: (response: any) => {
+        console.log('Upload successful!', response);
+        this.openDialog('Image uploaded successfully!');
       },
-
-      (error: any) => {
-        console.error(error);
+      error: (error: any) => {
+        console.error('Upload failed!', error);
+        this.openDialog('Upload failed: ' + error.message);
       }
-    )
-
+    });
   }
 
+  // Clear the selected image
+  clearImage(): void {
+    this.selectedImage = null;
+    this.files = [];
+    if (this.fileUpload) {
+      this.fileUpload.nativeElement.value = ''; // Clear the file input
+    }
+  }
+
+  // Clear the article link input
+  clearArticleLink(): void {
+    this.articleLink = '';
+  }
+
+  // Handle video file selection
   onVideoSelected(event: any) {
     if (event.target.files.length > 0) {
       this.videoFile = event.target.files[0];
     }
   }
 
+  // Upload the selected video
   onUploadVideo() {
     if (!this.videoFile) {
-      console.error('Niciun fișier video selectat!');
+      console.error('No video file selected!');
       return;
     }
 
@@ -79,60 +98,15 @@ export class VerifyLinkComponent {
 
     this.http.post('http://localhost:5000/api/upload/video', formData).subscribe({
       next: (response) => {
-        console.log('Upload reușit!', response);
+        console.log('Upload successful!', response);
       },
       error: (err) => {
-        console.error('Eroare la upload!', err);
+        console.error('Upload failed!', err);
       }
     });
   }
 
-  removeFile(event:Event, file: any) {
-    let ix
-    if (this.files && -1 !== (ix = this.files.indexOf(file))) {
-      this.files.splice(ix, 1)
-      this.clearInputElement()
-    }
-  }
-
-  clearArticleLink(): void {
-    this.articleLink = '';
-  }
-  validate(file: File) {
-    for (const f of this.files) {
-      if (f.name === file.name
-        && f.lastModified === file.lastModified
-        && f.size === f.size
-        && f.type === f.type) 
-      {
-        return false
-      }
-    }
-    return true
-  }
-
-  clearInputElement() {
-    if (this.fileUpload) {
-      this.fileUpload.nativeElement.value = ''
-    }
-  }
-
-  isMultiple(): boolean {
-      return true; 
-  }
-
-  onConfirm(link: string):void{
-    if(this.selected_type == 'article'){
-      this.verify_site_link(link);
-
-    } else if(this.selected_type == 'image'){
-      this.verify_image_link(link);
-    
-    } else if(this.selected_type == 'video'){
-      this.verify_video_link(link);
-    }
-  }
-
+  // Open a dialog with a message
   openDialog(message: string): void {
     this.dialog.open(DialogComponent, {
       data: { message },
@@ -140,41 +114,53 @@ export class VerifyLinkComponent {
     });
   }
 
-  verify_site_link(link: string):void {
+  // Handle confirmation based on the selected type
+  onConfirm(link: string): void {
+    if (this.selected_type === 'article') {
+      this.verify_site_link(link);
+    } else if (this.selected_type === 'image') {
+      this.verify_image_link(link);
+    } else if (this.selected_type === 'video') {
+      this.verify_video_link(link);
+    }
+  }
+
+  // Verify site link
+  verify_site_link(link: string): void {
     this.linkService.verifySite(link).subscribe({
       next: (response: any) => {
-        this.openDialog("Article result: " + response['verdict']);      
+        this.openDialog('Article result: ' + response['verdict']);
       },
       error: (error: any) => {
-        console.log(error);
-        this.openDialog("Verification failed: " + error);
+        console.error(error);
+        this.openDialog('Verification failed: ' + error.message);
       }
-    })
+    });
   }
 
-  verify_image_link(link: string):void {
+  // Verify image link
+  verify_image_link(link: string): void {
     this.linkService.verifyImage(link).subscribe({
       next: (response: any) => {
-        this.openDialog("Image result: " + response['prediction']);      
+        this.openDialog('Image result: ' + response['prediction']);
       },
       error: (error: any) => {
         console.error(error);
-        this.openDialog("Verification failed: " + error.message);
+        this.openDialog('Verification failed: ' + error.message);
       }
-    })
+    });
   }
 
-  verify_video_link(link: string):void {
+  // Verify video link
+  verify_video_link(link: string): void {
     this.linkService.verifyVideo(link).subscribe({
       next: (response: any) => {
-        this.openDialog("Provided video is " + response['video'] + " with " + response['audio'] + " criteria.");      
+        this.openDialog('Provided video is ' + response['video'] + ' with ' + response['audio'] + ' criteria.');
       },
-
       error: (error: any) => {
         console.error(error);
-        this.openDialog("Verification failed: " + error.message);
+        this.openDialog('Verification failed: ' + error.message);
       }
-    })
+    });
   }
-
 }
