@@ -25,5 +25,5 @@ def predict_image(image: MatLike) -> int:
     return model.predict(prepared_image)
 
 if __name__ == "__main__":
-    img = cv2.imread('/home/anubis/Downloads/archive/test/FAKE/0.jpg')
+    img = cv2.imread('/home/anubis/Downloads/archive/test/REAL/0000.jpg')
     print(predict_image(img))

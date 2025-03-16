@@ -10,6 +10,7 @@ from src.routes.site_routes import *
 from src.routes.auth_routes import *
 from src.model.oauthmanager import OAuthManager
 from src.routes.upload_routes import *
+from src.routes.chat_routes import *
 # import project source folder
 import sys
 sys.path.append("src")
@@ -36,6 +37,7 @@ app.register_blueprint(user_bp)
 app.register_blueprint(site_bp)
 app.register_blueprint(auth_bp)
 app.register_blueprint(upload_bp)
+app.register_blueprint(chat_bp)
 
 if __name__ == '__main__':
 	socketio.run(app, host='0.0.0.0', port=5000, use_reloader=False, debug=True, allow_unsafe_werkzeug=True)

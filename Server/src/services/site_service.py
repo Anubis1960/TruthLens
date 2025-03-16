@@ -92,6 +92,8 @@ def validate_video_link(link: str) -> dict:
 
 		verdict = predict_text(title, text)
 
+		os.remove(f"{out_path}.mp4")
+
 		print(verdict)
 
 		return {"audio": verdict, "video": prediction}
