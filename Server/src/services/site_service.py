@@ -100,6 +100,10 @@ def validate_video_link(link: str) -> dict:
 
 		text = transcript(link)
 		verdict = predict_text(title, text)
+
+		os.remove(f"{out_path}.mp4")
+
+		print(verdict)
 		return {"audio": verdict, "video": prediction}
 
 	except Exception as e:

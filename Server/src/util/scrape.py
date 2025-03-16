@@ -181,15 +181,23 @@ def transcript(url: str) -> str:
         return transcript.text
 
 def main():
-    url = "https://sputnikglobe.com/20250306/china-confident-in-trade-war-advantage-over-us--1121620685.html"
-    soup = get_soup(url)
-    if soup is None:
-        print(f"Failed to fetch {url}")
-        return
-    title = extract_title(soup)
-    text = extract_text(soup)
-    predict_text(title, text)
+    # url = "https://sputnikglobe.com/20250306/china-confident-in-trade-war-advantage-over-us--1121620685.html"
+    # soup = get_soup(url)
+    # if soup is None:
+    #     print(f"Failed to fetch {url}")
+    #     return
+    # title = extract_title(soup)
+    # text = extract_text(soup)
+    # predict_text(title, text)
 
+    image_link = "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmediapool.bmwgroup.com%2Fcache%2FP9%2F201507%2FP90190494%2FP90190494-bmw-e90-07-2015-2250px.jpg&f=1&nofb=1&ipt=7ad781a672ad435beef39c26bee8b2b16103e055e1e8679ff6214434a79fdc4a&ipo=images"
+    img = fetch_image(image_link)
+    if img is None:
+        print("Failed to fetch image.")
+        return
+
+    prediction = predict_image(img)
+    print(prediction)
 
 if __name__ == '__main__':
     main()
