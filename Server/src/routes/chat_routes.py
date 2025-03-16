@@ -3,6 +3,7 @@ import json
 from flask import Blueprint, request, jsonify
 import requests
 from http import HTTPStatus
+import re
 
 CHAT_URL = '/api/chat'
 
@@ -12,7 +13,7 @@ chat_bp = Blueprint('chat', __name__, url_prefix=CHAT_URL)
 # Ollama API URL
 OLLAMA_API_URL = "http://localhost:11434/api/generate"
 
-@chat_bp.route('/send', methods=['POST'])  # Use POST instead of GET
+@chat_bp.route('/send', methods=['POST'])
 def send_message():
     try:
         # Retrieve JSON data from the request
@@ -24,17 +25,13 @@ def send_message():
 
         # Validate required fields
         prompt = data.get('prompt')
-        context = data.get('context')
 
         if not prompt:
             return jsonify({"error": "Missing 'prompt' in request"}), HTTPStatus.BAD_REQUEST
-        if not context:
-            return jsonify({"error": "Missing 'context' in request"}), HTTPStatus.BAD_REQUEST
 
         print(f'Sending message: {prompt}')
-        print(f'Sending context: {context}')
 
-        content = f"System prompt: You are a helpfull assistant\nContext: {context}\nPrompt: {prompt}"
+        content = f"System prompt: You are a helpfull assistant\nPrompt: {prompt}"
 
         # Prepare the payload for Ollama API
         payload = {
@@ -49,13 +46,13 @@ def send_message():
 
         if response.status_code == 200:
             # Parse the response JSON
-            text = response.text
-            data = json.loads(text)
-            print(data)
-            res = data.get('response')
+            data = response.json()  # Use response.json() instead of json.loads(response.text)
+            res = data.get('response')  # Extract the 'response' field from the JSON
             print(res)
+            cleaned_res = re.sub(r'<think>.*?</think>', '', res, flags=re.DOTALL)
+            print(cleaned_res)
 
-            return jsonify({"response": res}), HTTPStatus.OK
+            return jsonify({"response": cleaned_res}), HTTPStatus.OK
 
     except requests.RequestException as e:
         # Handle errors related to the Ollama API request
