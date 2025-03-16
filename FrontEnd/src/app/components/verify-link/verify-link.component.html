@@ -35,7 +35,7 @@
          />
          <div *ngFor="let f of files">
           <span>{{f.name}}</span>
-          <button class="confirm-button"
+          <button class="delete-button"
                   [attr.title]="deleteButtonLabel?deleteButtonLabel:null"
                   (click)="removeFile(event,f)"
           >
@@ -46,7 +46,7 @@
       </div>
     </mat-tab>
     <mat-tab label="Video">
-      <div>
+      <div class="form-container">
         <input type="file" (change)="onVideoSelected($event)" accept="video/*">
         <button mat-raised-button color="primary" (click)="onUploadVideo()">Upload Video</button>
       </div>
