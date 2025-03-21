@@ -28,7 +28,7 @@ Every website scanned by TruthLens is assigned a trust score, helping you gauge 
 
 ### **Step 1: Clone the Repository**
 ```bash
-git clone https://github.com/Anubis1960/ITFest2025.git
+git clone https://github.com/Anubis1960/TruthLens.git
 ```
 
 ### **Step 2:  Install Dependencies**
