@@ -1,12 +1,13 @@
 import os
+
 from authlib.integrations.flask_client import OAuth
 from dotenv import load_dotenv
-from tensorflow.dtensor.python.config import client_id
 
 # load .env file
 load_dotenv()
 GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_API_OAUTH')
 GOOGLE_CLIENT_SECRET = os.getenv('GOOGLE_SECRET')
+
 
 #######################
 #

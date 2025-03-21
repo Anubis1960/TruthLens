@@ -1,9 +1,10 @@
-import torch
-from smolagents import OpenAIServerModel, CodeAgent, ToolCallingAgent, tool
+import os
+
 from dotenv import load_dotenv
 from langchain_community.vectorstores import FAISS
 from langchain_huggingface import HuggingFaceEmbeddings
-import os
+from smolagents import OpenAIServerModel, CodeAgent, ToolCallingAgent, tool
+
 # Load environment variables
 load_dotenv()
 
@@ -15,6 +16,7 @@ tool_model_id = os.getenv("TOOL_MODEL_ID")
 if not reasoning_model_id or not tool_model_id:
     raise ValueError("Environment variables REASONING_MODEL_ID and TOOL_MODEL_ID must be set.")
 
+
 # Function to get the model
 def get_model(model_id):
     if not model_id:
@@ -24,6 +26,7 @@ def get_model(model_id):
         api_base="http://localhost:11434/v1",
         api_key="ollama"
     )
+
 
 # Initialize models
 reasoning_model = get_model(reasoning_model_id)
@@ -39,6 +42,7 @@ embeddings = HuggingFaceEmbeddings(
 )
 db_dir = os.path.join(os.path.dirname(__file__), "faiss_db")
 vectordb = FAISS.load_local(db_dir, embeddings, allow_dangerous_deserialization=True)
+
 
 @tool
 def rag_with_reasoner(user_query: str) -> str:
@@ -77,6 +81,7 @@ Answer:"""
         return response
     except Exception as e:
         return f"An error occurred while processing the query: {str(e)}"
+
 
 # Create the primary agent to direct the conversation
 primary_agent = ToolCallingAgent(tools=[rag_with_reasoner], model=tool_model, add_base_tools=False, max_steps=3)

@@ -6,9 +6,7 @@ from dotenv import load_dotenv
 # load
 load_dotenv()
 
-#
-#	Database config
-#
+
 cred = credentials.Certificate(os.getenv('FIREBASE_PATH'))
 
 # init

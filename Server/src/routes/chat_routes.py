@@ -1,9 +1,8 @@
-import json
-
-from flask import Blueprint, request, jsonify
-import requests
-from http import HTTPStatus
 import re
+from http import HTTPStatus
+
+import requests
+from flask import Blueprint, request, jsonify
 
 CHAT_URL = '/api/chat'
 
@@ -12,6 +11,7 @@ chat_bp = Blueprint('chat', __name__, url_prefix=CHAT_URL)
 
 # Ollama API URL
 OLLAMA_API_URL = "http://localhost:11434/api/generate"
+
 
 @chat_bp.route('/send', methods=['POST'])
 def send_message():
@@ -61,4 +61,3 @@ def send_message():
     except Exception as e:
         # Handle other unexpected errors
         return jsonify({"error": f"Unexpected error: {str(e)}"}), HTTPStatus.INTERNAL_SERVER_ERROR
-

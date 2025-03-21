@@ -1,15 +1,10 @@
-import numpy as np
-import cv2
-from io import BytesIO
-
-from assemblyai import transcriber
-from pydub import AudioSegment
-import assemblyai as aai
-from ..util.img.img_detect import predict_image
-
-from src.util.scrape import get_total_frames, analyze_frames, transcript
 import os
 
+import cv2
+import numpy as np
+
+from src.util.scrape import get_total_frames, analyze_frames, transcript
+from ..util.img.img_detect import predict_image
 from ..util.news.news_detect import predict_text
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -17,6 +12,7 @@ TEMP_DIR = os.path.join(BASE_DIR, "..", "temp")
 
 if not os.path.exists(TEMP_DIR):
     os.makedirs(TEMP_DIR)
+
 
 def verify_img_file(file) -> dict:
     """
@@ -94,8 +90,6 @@ def verify_video(file):
             pred = 'Real'
 
         return {'video': pred, 'audio': verdict}
-
-
 
     except Exception as e:
         return {'error': f'Error during transcription: {str(e)}'}

@@ -98,7 +98,7 @@ def add_pdf_to_faiss(data_dir, persist_directory):
 def main():
     pdf_dir = "./docs"
     persist_directory = "faiss_db"
-    vectordb = add_pdf_to_faiss(pdf_dir, persist_directory)
+    add_pdf_to_faiss(pdf_dir, persist_directory)
 
 
 if __name__ == "__main__":

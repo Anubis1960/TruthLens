@@ -9,6 +9,7 @@ load_dotenv()
 
 m_path = os.getenv('IMG_MODEL')
 
+
 def load_modell():
     # Get the directory of the current script
     script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -17,21 +18,25 @@ def load_modell():
     model = tf.keras.models.load_model(model_path)
     return model
 
+
 def new_load_modell():
     model = tf.keras.models.load_model(m_path)
     return model
 
-def prepare_image(img: MatLike) -> MatLike:
-    image = cv2.resize(img, (32, 32))
+
+def prepare_image(im: MatLike) -> MatLike:
+    image = cv2.resize(im, (32, 32))
     image = image / 255
     image = np.expand_dims(image, axis=0)
     return image
 
-def new_prep_img(img: MatLike) -> MatLike:
-    image = cv2.resize(img, (64, 64))
+
+def new_prep_img(im: MatLike) -> MatLike:
+    image = cv2.resize(im, (64, 64))
     image = image / 255
     image = np.expand_dims(image, axis=0)
     return image
+
 
 def predict_image(image: MatLike) -> int:
     print("Predicting")
@@ -41,6 +46,7 @@ def predict_image(image: MatLike) -> int:
     prediction = model.predict(prepared_image)
     print("Prediction:", prediction)
     return prediction
+
 
 if __name__ == "__main__":
     img = cv2.imread('/home/anubis/Downloads/archive/test/REAL/0000.jpg')
