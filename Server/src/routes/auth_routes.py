@@ -4,8 +4,8 @@ from urllib.parse import urlencode
 from flask import Blueprint, request, jsonify
 from flask import redirect, url_for, session, current_app
 
-from ..services.user_service import *
-from ..util.encrypt import *
+from src.services.user_service import *
+from src.util.encrypt import *
 
 auth_bp = Blueprint('auth', __name__)
 

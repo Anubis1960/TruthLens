@@ -1,7 +1,7 @@
 from http import HTTPStatus
 from flask import jsonify, request, Blueprint
 
-from ..services.user_service import *
+from src.services.user_service import *
 
 USER_URL = '/api/users'
 

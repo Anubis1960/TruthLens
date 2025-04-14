@@ -4,8 +4,8 @@ import cv2
 import numpy as np
 
 from src.util.scrape import get_total_frames, analyze_frames, transcript
-from ..util.img.img_detect import predict_image
-from ..util.news.news_detect import predict_text
+from src.util.img.img_detect import predict_image
+from src.util.news.news_detect import predict_text
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 TEMP_DIR = os.path.join(BASE_DIR, "..", "temp")

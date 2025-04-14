@@ -1,7 +1,7 @@
-from ..model.user import User
-from ..dto.user_dto import UserDTO
-from ..util.database import db
-from ..util.encrypt import encrypt
+from src.model.user import User
+from src.dto.user_dto import UserDTO
+from src.util.database import db
+from src.util.encrypt import encrypt
 from google.cloud.firestore_v1.base_query import FieldFilter
 
 #

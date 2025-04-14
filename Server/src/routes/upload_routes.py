@@ -1,6 +1,6 @@
 from http import HTTPStatus
 from flask import request, Blueprint
-from ..services.upload_service import *
+from src.services.upload_service import *
 
 UPLOAD_URL = '/api/upload'
 

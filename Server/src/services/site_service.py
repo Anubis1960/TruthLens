@@ -1,6 +1,7 @@
-from ..util.database import db
-from ..util.news.news_detect import NEWS_CLASS_MAPPING
-from ..util.scrape import *
+from src.util.database import db
+from src.util.news.news_detect import NEWS_CLASS_MAPPING
+from src.util.scrape import *
+from src.util.news.news_detect import predict_text
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 TEMP_DIR = os.path.join(BASE_DIR, "..", "temp")

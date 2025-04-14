@@ -9,7 +9,7 @@ import yt_dlp
 from deep_translator import GoogleTranslator
 from dotenv import load_dotenv
 
-from ..util.img.img_detect import predict_image
+from src.util.img.img_detect import predict_image
 
 # load .env file
 load_dotenv()
